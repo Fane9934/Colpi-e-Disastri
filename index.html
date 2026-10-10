@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Colpi &amp; Disastri · D&amp;D 5.5</title>
+<style>
+:root{--bg:#120d17;--bg2:#1d1426;--card:#241a30;--tx:#f1e9dc;--mut:#a99bb8;--gold:#f2b84b;--red:#e5484d;--vio:#9b6bff;--grn:#5fd18a;--ln:#3a2c4a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme=dark]){--bg:#f6efe4;--bg2:#fff8ec;--card:#fffdf8;--tx:#2b2033;--mut:#6c5d7a;--ln:#dccfbd}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font-family:Georgia,'Palatino Linotype',serif}
+body{background:radial-gradient(120% 60% at 50% 0,var(--bg2),var(--bg));min-height:100vh;transition:background .3s}
+body.fc{animation:fc .7s}body.ff{animation:ff .7s}
+@keyframes fc{0%{box-shadow:inset 0 0 0 100vmax #f2b84b88}100%{box-shadow:inset 0 0 0 100vmax #0000}}
+@keyframes ff{0%{box-shadow:inset 0 0 0 100vmax #e5484d77}100%{box-shadow:inset 0 0 0 100vmax #0000}}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 6px}
+h1{margin:0;font-size:1.35rem;letter-spacing:.04em;background:linear-gradient(90deg,var(--gold),var(--red));-webkit-background-clip:text;background-clip:text;color:transparent}
+h1 small{display:block;font-size:.65rem;color:var(--mut);-webkit-text-fill-color:var(--mut);letter-spacing:.2em}
+#snd{border:1px solid var(--ln);background:var(--card);color:var(--tx);border-radius:999px;padding:8px 12px;font-size:1rem}
+nav{display:flex;gap:6px;padding:8px 12px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+nav button{flex:1;padding:12px 4px;border:1px solid var(--ln);background:var(--card);color:var(--mut);border-radius:12px;font:inherit;font-size:.95rem}
+nav button.on{color:#1a1020;background:linear-gradient(135deg,var(--gold),#ff8a4b);border-color:transparent;font-weight:700}
+nav button.on.f{background:linear-gradient(135deg,var(--vio),#e5484d)}
+main{padding:6px 14px 40px;max-width:640px;margin:auto}
+section{display:none}section.on{display:block}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:16px;padding:14px;margin:10px 0}
+h2{font-size:1.05rem;margin:0 0 8px;color:var(--gold)}
+h3{font-size:.95rem;margin:12px 0 4px;color:var(--vio)}
+p,li{font-size:.92rem;line-height:1.45;margin:4px 0}ul{padding-left:18px;margin:4px 0}
+table{width:100%;border-collapse:collapse;font-size:.88rem}td,th{padding:6px;border-bottom:1px solid var(--ln);text-align:left}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.b{padding:20px 6px;border:0;border-radius:16px;font:inherit;font-weight:700;font-size:1rem;color:#fff;box-shadow:0 6px 0 #0006,0 10px 24px #0005;transition:transform .08s}
+.b:active{transform:translateY(5px);box-shadow:0 1px 0 #0006}
+.b span{display:block;font-size:1.8rem;margin-bottom:4px}
+.pb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:.85rem;color:var(--mut)}
+.pb button{width:40px;height:40px;border-radius:50%;border:1px solid var(--ln);background:var(--card);color:var(--tx);font:inherit}
+.pb button.on{background:var(--gold);color:#1a1020;font-weight:700}
+#rc,#rf{min-height:150px;text-align:center}
+.d20{display:inline-grid;place-items:center;width:78px;height:78px;font-size:2rem;font-weight:700;background:conic-gradient(from 30deg,var(--gold),var(--red),var(--vio),var(--gold));color:#fff;clip-path:polygon(50% 0,95% 25%,95% 75%,50% 100%,5% 75%,5% 25%);text-shadow:0 2px 4px #000a}
+.rolling .d20{animation:sp .25s linear infinite}@keyframes sp{to{transform:rotate(30deg) scale(1.08)}}
+.pop{animation:pop .45s cubic-bezier(.2,1.6,.4,1)}@keyframes pop{from{transform:scale(.7);opacity:0}}
+.tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;margin:6px 3px 0;border:1px solid var(--ln);color:var(--mut)}
+.Grave{background:#e5484d33;color:#ff8d90}.Media{background:#f2b84b33;color:var(--gold)}.Lieve{background:#5fd18a33;color:var(--grn)}
+.tt{font-size:1.5rem;margin:10px 0 2px}.fl{font-style:italic;color:var(--mut);margin:0 0 10px}
+.ef{font-size:1.02rem;padding:10px;border-radius:10px;background:#0003;text-align:left}
+.sv{margin-top:8px;font-size:.9rem;color:var(--gold)}
+.hist{font-size:.8rem;color:var(--mut)}.hist div{padding:3px 0;border-bottom:1px dashed var(--ln)}
+.empty{color:var(--mut);padding-top:40px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.chips button,.back{padding:8px 12px;border-radius:999px;border:1px solid var(--ln);background:var(--card);color:var(--mut);font:inherit;font-size:.85rem}.chips button.on{background:var(--gold);color:#1a1020;font-weight:700}.back{color:var(--tx);margin-bottom:6px}
+#lq{width:100%;padding:12px;border-radius:12px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font:inherit;font-size:1rem}.li{text-align:left;margin:8px 0}
+</style></head><body>
+<header><h1>Colpi &amp; Disastri<small>CRITICI · FUMBLE · D&amp;D 5.5</small></h1><button id="snd" aria-label="Audio">🔊</button></header>
+<nav><button class="on" data-t="r">📜 Regole</button><button data-t="c">💥 Critici</button><button data-t="f" class="fb">🎲 Fumble</button></nav>
+<main>
+<section id="r" class="on">
+<div class="card"><h2>🎲 Fumble (1 naturale)</h2>
+<ul><li>L'attacco <b>manca</b> automaticamente.</li>
+<li>Tocca il tipo di attacco nell'app: ottieni un effetto casuale, con la sua <b>CD</b> indicata sotto l'effetto.</li>
+<li>Chi ha attaccato fa un <b>tiro salvezza</b>: d20 + modificatore di caratteristica + bonus di competenza (Forza o Destrezza in mischia e con armi naturali, Destrezza a distanza, caratteristica da incantatore con la magia).</li>
+<li><b>Successo:</b> l'attacco manca e basta. <b>Fallimento:</b> subisce l'effetto.</li></ul>
+<h3>CD per gravità (più grave = più facile da evitare)</h3>
+<table><tr><th>Gravità</th><th>Effetti</th><th>CD</th></tr><tr><td><span class="tag Grave">Grave</span></td><td>Gravi conseguenze</td><td>10</td></tr><tr><td><span class="tag Media">Media</span></td><td>Effetti tattici</td><td>13</td></tr><tr><td><span class="tag Lieve">Lieve</span></td><td>Fastidi minori</td><td>16</td></tr></table></div>
+<div class="card"><h2>💥 Colpo Critico (20 naturale)</h2>
+<ul><li>Il colpo è un critico: <b>raddoppia i dadi di danno</b>.</li>
+<li>Tocca il tipo di danno nell'app: ottieni un effetto casuale, con il suo <b>tiro salvezza</b>.</li>
+<li>Il bersaglio fa un tiro salvezza contro <b>CD = CD base dell'effetto + bonus di competenza dell'attaccante</b>.</li>
+<li><b>Successo:</b> solo il danno raddoppiato. <b>Fallimento:</b> danno raddoppiato più l'effetto.</li></ul>
+<h3>CD per gravità (più grave = più facile da evitare)</h3>
+<table><tr><th>Gravità</th><th>Effetti</th><th>CD base</th></tr>
+<tr><td><span class="tag Grave">Grave</span></td><td>Gravi conseguenze</td><td>8</td></tr><tr><td><span class="tag Media">Media</span></td><td>Effetti tattici</td><td>12</td></tr><tr><td><span class="tag Lieve">Lieve</span></td><td>Fastidi minori</td><td>15</td></tr></table>
+<p>Il tipo Magico vale per i tiri per colpire con incantesimo.</p></div>
+<div class="card"><h2>🎯 Come si usa</h2><p>Scegli la scheda <b>Critici</b> o <b>Fumble</b>, poi tocca il tipo di attacco: l'app sceglie un effetto a caso e te lo mostra.</p><button class="b" id="olib" style="width:100%;padding:16px;margin-top:6px;background:linear-gradient(145deg,#7a4fd6,#1a1020 160%)">📚 Libreria degli effetti</button></div>
+</section>
+<section id="l"><div class="card"><button class="back" id="bl">← Regole</button><h2>📚 Libreria degli effetti</h2><div class="chips" id="lk"></div><div class="chips" id="lt"></div><div class="chips" id="lg"></div><input id="lq" type="search" placeholder="Cerca un effetto…"></div><div id="ll"></div></section>
+<section id="c"><div class="card pb">Bonus competenza (per la CD): <span id="pbs"></span></div>
+<div class="g" id="cb"></div><div class="card" id="rc"><div class="empty">Tocca un tipo di danno 💥</div></div><div class="card hist" id="hc"></div></section>
+<section id="f"><div class="card"><p>Hai fatto 1 naturale: tocca il tipo di attacco, poi fai il tiro salvezza con la CD indicata sotto l'effetto.</p></div>
+<div class="g" id="fb"></div><div class="card" id="rf"><div class="empty">Tocca un tipo di attacco 🎲</div></div><div class="card hist" id="hf"></div></section>
+</main>
+<script>
+const AB={C:'Costituzione',D:'Destrezza',F:'Forza',S:'Saggezza',I:'Intelligenza',A:'Carisma'};
+const CR={Contundente:['🔨','#b5651d',`Trachea Schiacciata|Il respiro si spezza.|Non parla né lancia incantesimi verbali per 1 minuto.|C
+Intestini Schiacciati|Le viscere cedono.|1 livello di Esaurimento; ripete il TS ogni turno, ogni fallimento +1 livello (max 3).|C
+Spacca Ossa|Un crack sordo.|Gamba: velocità dimezzata; braccio: inutilizzabile. Fino a Riposo Lungo o cura magica.|C
+Frattura del Cranio|Il cranio si incrina.|1 livello di Esaurimento e Svantaggio ai TS mentali fino a Riposo Lungo.|C
+Cervello Concusso|Pensieri in frantumi.|Nel prossimo turno solo Azione o Azione Bonus.|C
+Polmone Collassato|L'aria non entra.|Incapacitato 1 round, poi Svantaggio alle prove di Forza per 1 minuto.|C
+Sgomitata Violenta|Gomito nel plesso.|Lascia cadere ciò che tiene in mano.|D
+Ceffone Magistrale|Uno schiaffo che risuona.|Stordito fino alla fine del suo prossimo turno.|C
+Buonanotte|Luci spente.|Privo di sensi fino alla fine del suo prossimo turno o finché subisce danno.|C
+I Miei Denti!|Sputa sangue e smalto.|50% di fallire incantesimi verbali fino a cura magica o Riposo Lungo.|C
+Spinta Indietro|Scagliato come un sacco.|Spinto di 3 m e Prono.|F
+Concussione|Testa che ronza.|Svantaggio alle prove di Int e Sag fino a Riposo Breve.|C
+Ginocchia a Terra|Le gambe cedono.|Prono e velocità 0 fino alla fine del suo prossimo turno.|F
+E Resta Giù!|Ordine e percossa.|Prono; non può rialzarsi fino alla fine del suo prossimo turno.|C
+Campane a Festa|Orecchie che fischiano, stomaco in subbuglio.|Avvelenato per 1d4 round.|C
+Costola Incrinata|Ogni respiro punge.|1 livello di Esaurimento fino a Riposo Breve.|C
+Ginocchio Frantumato|Zoppica orribilmente.|Velocità dimezzata finché non curato (Medicina CD 10 o magia).|C
+Scappellotto Doppio|Due mani sulle orecchie.|Assordato per 1 ora.|C
+Vedo le Stelle|Puntini luminosi ovunque.|Svantaggio ai tiri per colpire per 1d4 round.|C
+Mazza in Faccia|Naso e orgoglio ammaccati.|Accecato fino alla fine del suo prossimo turno.|C`],
+Perforante:['🗡️','#2f8f9d',`Benda sull'Occhio|Un occhio in meno.|Svantaggio a Percezione (vista) e agli attacchi a distanza fino a cura magica.|C
+Polmone Perforato|Respiro sibilante.|1 livello di Esaurimento e niente Scatto finché non curato (Medicina CD 15 o magia).|C
+Spina Dorsale Recisa|Le gambe non rispondono.|Prono, velocità dimezzata, 2 livelli di Esaurimento fino a cura magica.|C
+Foro di Spillo|Piccolo foro, grande emorragia.|1d6 sanguinamento a inizio turno finché non medicato (Medicina CD 10).|C
+Gomito Trafitto|La lama scivola tra le ossa.|Lascia cadere ciò che tiene; mano inutilizzabile fino alla fine del suo prossimo turno.|D
+Freno della Lingua|Parole biascicate.|50% di fallire incantesimi verbali fino a Riposo Breve.|C
+Infezione|Una ferita che puzza.|Svantaggio ai TS su Costituzione fino a Riposo Lungo.|C
+Arteria Graffiata|Sangue a fiotti.|2d6 sanguinamento a inizio turno per 3 round o finché non medicato (Medicina CD 12).|C
+Trappola Giavellotti|Un pezzo di lancia incastrato.|+1d6 danni da ogni attacco a distanza finché non rimosso (azione, Medicina CD 10).|D
+Passante|Trapassato da parte a parte.|1d6 sanguinamento (Medicina CD 10 per fermarlo) e 1 livello di Esaurimento.|C
+Gruppo Nervoso|Scossa lungo la spina.|Stordito 1d4 round; ripete il TS a fine turno.|C
+Perforato|Un buco dove non dovrebbe.|Incapacitato fino alla fine del suo prossimo turno.|C
+Braccio Inchiodato|Una freccia lo fissa alla parete.|Velocità 0; si libera con azione di Forza CD 12.|F
+Puntura d'Ape|Piccola, velenosa, vendicativa.|Avvelenato per 1d6 round.|C
+Ferita alla Spalla|Il braccio pesa come piombo.|Svantaggio ai tiri per colpire basati su For/Des fino a Riposo Breve.|C
+Osso Scheggiato|Una scheggia si stacca.|+1d6 danni perforanti.|C
+Guancia Perforata|Un sorriso involontario.|1d4 sanguinamento e 50% di fallire incantesimi verbali fino alla fine del suo prossimo turno.|C
+Tacco d'Achille|Il tallone cede.|Velocità dimezzata fino a cura (Medicina CD 10).|C
+Dritto nell'Orecchio|Il suono si spegne.|1d4 sanguinamento e Assordato per 1 round.|C
+Foro al Polpaccio|Gamba bucata.|Svantaggio ai TS su Destrezza per 1 round.|C`],
+Tagliente:['🪓','#c0392b',`Decapitazione|Una testa rotola.|Se sotto il 25% dei PF scende a 0 PF (a discrezione del DM: morte); altrimenti 2 livelli di Esaurimento.|C
+Mano Mozzata|Netto, quasi educato.|Perde l'uso della mano fino a Rigenerazione.|C
+Sviscerato|Le budella escono.|1 livello di Esaurimento e 1d6 sanguinamento a round finché non medicato (Medicina CD 12).|C
+Squarcio alla Gola|Un sorriso rosso sotto il mento.|Non parla e subisce 1d6 sanguinamento a turno finché non medicato (Medicina CD 15).|C
+Attraverso gli Occhi|Buio improvviso.|Accecato per 1d4 round.|C
+Sferzata alla Fronte|Sangue negli occhi.|Svantaggio a Percezione e ai tiri a distanza finché non medicato.|C
+Orecchio Mancante|Un pezzo in meno.|Svantaggio a Percezione (udito) fino a Rigenerazione.|C
+Incisione delle Iniziali|Firma con la lama.|Umiliato: nel prossimo turno può attaccare solo chi l'ha ferito.|S
+Taglio al Labbro|Bocca insanguinata.|20% di fallire incantesimi verbali e 1d4 sanguinamento finché non medicato.|C
+Lacerazione Addominale|Ventre aperto.|1d6 sanguinamento a inizio turno finché non medicato (Medicina CD 12).|C
+Scorticato|Pelle strappata.|Svantaggio alle prove di Forza fino a Riposo Breve.|C
+Dita Mozzate|Dita che volano.|Perde 1d3 dita: Svantaggio con armi di quella mano fino a cura magica.|C
+Spaccatura al Torace|Il colpo affonda.|1 livello di Esaurimento.|C
+Squarcio Profondo|Taglio lungo e cattivo.|1d4 sanguinamento a turno e niente Scatto finché non medicato.|C
+Armatura Danneggiata|Cinghie tranciate.|−1 alla CA fino a riparazione.|D
+Taglietto di Carta|Piccolo ma fastidioso.|−2 ai tiri per colpire per 1 round.|C
+Vesti a Brandelli|Stoffa al vento.|−1 alla CA per 1 round.|D
+Tendine Sfiorato|La gamba tira.|Velocità dimezzata fino alla fine del suo prossimo turno.|D
+Sopracciglio Aperto|Il sangue acceca.|Svantaggio ai tiri per colpire fino alla fine del suo prossimo turno.|C
+Fendente al Fianco|Il fianco brucia.|1d4 sanguinamento a inizio turno per 2 round.|C`],
+Magico:['🔮','#7a4fd6',`Fenditura Planare|Il mondo si squarcia.|Bandito su un piano casuale fino alla fine del suo prossimo turno.|S
+Pietrificato|Carne che diventa roccia.|Pietrificato per 1 minuto; ripete il TS a fine turno.|C
+Risucchio di Vita|La forza evapora.|1 livello di Esaurimento fino a Riposo Lungo.|C
+Anima Sfilacciata|Un frammento di spirito se ne va.|PF massimi ridotti di metà del danno subito fino a Riposo Lungo.|C
+Isolato dalla Magia|Il Tessuto si chiude.|Non può lanciare incantesimi fino alla fine del suo prossimo turno.|S
+Incantesimo Drenante|Il potere scivola via.|Perde uno slot incantesimo (il più alto fino al 5° livello).|A
+Magia Vampirica|L'energia cambia padrone.|L'attaccante recupera PF pari a metà del danno inflitto.|C
+Ustione Persistente|Fiamme che non si spengono.|Prende fuoco: 1d6 fuoco a inizio turno finché non usa un'azione per spegnersi.|D
+Gelo nelle Ossa|Brina sulle ciglia.|Velocità dimezzata e Svantaggio alle prove di Destrezza fino alla fine del suo prossimo turno.|C
+Scarica Nervosa|Fulmine nei nervi.|Niente Reazioni e Svantaggio ai tiri per colpire per 1 round.|C
+Boato Assordante|Il tuono entra nel cranio.|Spinto di 3 m e Assordato per 1 minuto.|C
+Mente Offuscata|Il pensiero si fa denso.|Perde la concentrazione e Svantaggio ai TS su Concentrazione per 1 minuto.|I
+Veleno Arcano|Il sangue brucia.|Avvelenato per 1 minuto; ripete il TS a fine turno.|C
+Sguardo nel Vuoto|Visioni di altri piani.|Spaventato per 1 round.|S
+Acido Corrosivo|L'armatura fuma.|−1 alla CA fino a riparazione.|D
+Occhi Abbagliati|Luce nel nervo ottico.|Accecato fino alla fine del suo prossimo turno.|C
+Orecchie che Fischiano|Un acuto insopportabile.|Assordato fino alla fine del suo prossimo turno.|C
+Scintille nei Capelli|Scossa spiacevole.|Svantaggio al prossimo tiro per colpire.|D
+Riflesso Ritardato|Il tempo rallenta un istante.|Niente Reazioni fino all'inizio del suo prossimo turno.|D
+Eco Arcana|Il bersaglio vibra.|Subisce 1d6 danni da forza extra.|C`]};
+const FU={Mischia:['⚔️','#b5651d',`Errore Catastrofico|Il mondo si ribalta.|Cadi Prono e sei Stordito fino alla fine del tuo prossimo turno.
+Elsa Spezzata|Il manico cede.|L'arma perde Portata e subisce −2 ai tiri per colpire fino a riparazione.
+Errore Critico|Il colpo ti sfiora.|Subisci il danno normale dell'arma (senza bonus).
+Lama Rotta|Un tintinnio metallico.|L'arma non magica si spezza; se magica, cade ai tuoi piedi.
+Scudo in Frantumi|Legno in schegge.|Lo scudo non dà più bonus alla CA finché non riparato; senza scudo, lasci cadere l'arma.
+Occhio all'Alleato|Chi era quello?|L'attacco colpisce l'alleato più vicino alla portata (danno normale).
+Pulizia delle Orecchie|La tua stessa lama sfiora il timpano.|Assordato per 1 minuto.
+Mangia Terra|Faccia nella polvere.|Cadi Prono e sei Accecato per 1 round.
+Scivolato|Una buccia traditrice.|Cadi Prono.
+Lancia in Aria|L'arma prende il volo.|Vola per 1d6 × 1,5 m in direzione casuale.
+Troppa Roba!|Zaino, cinghie, imbracature.|Sei Trattenuto finché non usi un'azione per liberarti.
+Consegnala|Il nemico ringrazia.|L'arma cade e il bersaglio la afferra (se non può, cade accanto a lui).
+Impugnatura Piegata|Arma storta.|−2 ai tiri per colpire con quest'arma finché non riparata.
+Muscolo Stirato|Un crac nella schiena.|Svantaggio ad Atletica e agli attacchi di Forza fino a Riposo Breve.
+Mani di Burro|L'arma scivola.|Cade ai tuoi piedi.
+Attacco Goffo|Sbilanciato.|−2 alla CA per 1d4 round.
+Tacca sulla Lama|Scalfita.|−1 ai danni con quest'arma fino a riparazione.
+Che Male!|Ti sbucci le nocche.|1d4 sanguinamento a turno per 3 round.
+Osso del Sorriso|Scossa al gomito.|Lasci cadere ciò che hai nella mano secondaria.
+Aspetta! Cosa?|Hai perso il filo.|Sei Incapacitato fino all'inizio del tuo prossimo turno.`],
+Distanza:['🏹','#2f8f9d',`Ti Spari in un Occhio|La freccia rimbalza.|Subisci il danno dell'attacco (senza bonus) e sei Accecato per 1 round.
+Esaurito|Hai dato tutto.|2 livelli di Esaurimento fino a Riposo Breve.
+Arma Distrutta|Il legno si spezza.|L'arma si rompe; se magica, resta inutilizzabile fino a riparazione.
+Ritorno di Fiamma|Il proiettile cambia idea.|Subisci il danno normale dell'attacco.
+Ops!|Il piede non c'era.|Cadi Prono.
+Corda Spezzata|Schiocco secco.|Corda dell'arco/balestra spezzata (un'azione per ripararla).
+Fuoco Amico|Qualcuno era in mezzo.|Colpisci l'alleato più vicino alla traiettoria.
+Non il Mio Pony!|Un nitrito di protesta.|Colpisci la cavalcatura alleata più vicina (se non c'è, la munizione è persa).
+Arma Inceppata|Il meccanismo si blocca.|Serve un'Azione per sbloccarla.
+Centro Involontario|Il bersaglio era un'altra cosa.|Il colpo rimbalza e ti Acceca per 1 round.
+Faretra Rovesciata|Frecce ovunque.|Usa un'Azione per raccogliere o perdi metà delle munizioni.
+Impigliato nella Corda|Il braccio si aggroviglia.|Sei Trattenuto finché non usi un'azione per liberarti.
+Tiro Errato|La mira si sposta.|Ritira l'attacco contro la creatura più vicina al bersaglio.
+Postura Goffa|Gambe incrociate male.|−2 alla CA per 1d4 round.
+Capogiro|Troppo teso, troppo tardi.|Avvelenato per 1d4 round.
+Scoperto|Hai abbassato la guardia.|I nemici hanno Vantaggio contro di te per 1 round.
+Storta al Polso|Ahi!|Svantaggio alle prove di Destrezza per 1d4 round.
+Dita Tagliate|La corda frusta.|1d4 sanguinamento a turno per 3 round.
+Fischio alle Orecchie|Troppo vicino al timpano.|Assordato fino alla fine del tuo prossimo turno.
+Un Colpo alla Volta|Calma, respira.|Solo un attacco per turno per 3 round.`],
+Naturale:['🐾','#c0392b',`Scontro Brutale|Ti schianti.|L'attacco manca e sei Stordito fino alla fine del tuo prossimo turno.
+Autolesionista|Ti dai un pugno da solo.|Subisci il danno normale dell'attacco.
+Dito Incastrato|Rimasto nell'armatura.|Subisci il danno dell'attacco e sei Trattenuto finché non usi un'azione per liberarti.
+Slogatura Colossale|Spalla fuori sede.|Non puoi usare quest'arma naturale fino a Riposo Breve.
+Fuori Posizione|Ti trovi dalla parte sbagliata.|Non usi quest'arma naturale per 1 round.
+Gamba Sbilanciata|Inciampi.|Cadi Prono.
+Pugno Sanguinante|Nocche aperte.|1d4 sanguinamento a turno per 3 round.
+Strappo Muscolare|Crac.|1 livello di Esaurimento fino a Riposo Breve.
+Testa Contro il Muro|Cozzi con la realtà.|Incapacitato fino alla fine del tuo prossimo turno.
+Testata Sbagliata|Barcolli.|Svantaggio ai TS su Destrezza e velocità dimezzata fino alla fine del tuo prossimo turno.
+Bloccato dal Nemico|Ti ha preso al volo.|Il bersaglio può usare la Reazione per farti cadere Prono.
+Zanna Scheggiata|Un pezzo in meno.|Quest'arma naturale infligge −1 danni fino a Riposo Lungo.
+Morso alla Lingua|Ti mordi da solo.|Subisci 1d4 danni.
+Esposizione Eccessiva|Troppo avanti.|Attacchi d'opportunità da tutti i nemici adiacenti.
+Formicolio|Il braccio dorme.|Avvelenato per 1d4 round.
+Inciampo Feroce|La furia sbaglia bersaglio.|Colpisci un alleato a portata (danno normale).
+Starnuto!|Proprio ora.|Incapacitato fino all'inizio del tuo prossimo turno.
+Crampo|Il polpaccio si indurisce.|Velocità dimezzata fino alla fine del tuo prossimo turno.
+Mano Intorpidita|Non senti più le dita.|Svantaggio al prossimo attacco.
+Peso Sbagliato|Il baricentro tradisce.|−2 alla CA fino all'inizio del tuo prossimo turno.`],
+Magia:['✨','#7a4fd6',`Fenditura Mostruosa|Qualcosa risponde alla chiamata.|L'incantesimo evoca un mostro ostile (GS pari a metà del livello dell'incantesimo, min ¼) che ti attacca.
+Riflessione|Lo specchio ti guarda.|L'incantesimo ha te come bersaglio (TS normale, se previsto).
+Decollo Involontario|Su, su, su…|Scagliato in aria per 1d6 × 3 m, poi danno da caduta.
+Slot Bruciato|Il Tessuto si strappa.|Perdi lo slot e subisci 1d6 danni psichici per livello dell'incantesimo.
+Drenaggio Mentale|Pensieri a secco.|Svantaggio alle prove mentali fino a Riposo Breve.
+Fuoco Arcano|Il potere morde indietro.|Subisci 2d6 danni da fuoco.
+Fatica Magica|Le parole si spengono.|Non puoi lanciare incantesimi nel prossimo turno.
+Blocco dell'Incantatore|La formula svanisce.|Non puoi lanciare quell'incantesimo per 24 ore.
+Lingua Annodata|Sillabe che si intrecciano.|50% di fallire incantesimi verbali fino alla fine del tuo prossimo turno.
+Concentrazione in Frantumi|Il filo si spezza.|Perdi la concentrazione e Svantaggio ai TS su Concentrazione per 1 minuto.
+Bersaglio Sbagliato|Chi? Io?|L'incantesimo colpisce un alleato casuale entro 9 m.
+Spruzzo Instabile|L'incanto si disfa in scintille.|Subisci 1d6 danni da forza e sei spinto di 1,5 m.
+Singhiozzo Arcano|Hic!|Niente Reazioni fino all'inizio del tuo prossimo turno.
+Capelli Elettrici|Ti si rizzano.|Svantaggio ai TS su Destrezza fino alla fine del tuo prossimo turno.
+Voce Fuori Controllo|Parli in rima.|Svantaggio alle prove di Carisma per 1 minuto.
+Luce Residua|Brilli come un faro.|Gli attacchi contro di te hanno Vantaggio fino all'inizio del tuo prossimo turno.
+Gusto Metallico|Sa di monete.|Avvelenato per 1 round.
+Eco Ritardata|L'incanto arriva in ritardo.|Svantaggio ai tiri per colpire degli incantesimi fino all'inizio del tuo prossimo turno.
+Brividi Arcani|Il freddo sale.|Velocità dimezzata fino alla fine del tuo prossimo turno.
+Sbuffo di Fumo|Visione offuscata.|Svantaggio a Percezione fino alla fine del tuo prossimo turno.`]};
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const TFc={Contundente:`Trachea Schiacciata|Il colpo affonda nella gola con un rantolo strozzato: l'aria non passa più e ogni parola muore in un gorgoglio.
+Visceri Sconvolti|Il colpo affonda nel ventre e qualcosa dentro si rompe; il dolore ti piega in due e le gambe tremano.
+Ossa Spaccate|Si sente chiaramente lo schiocco secco dell'osso che cede, seguito da un urlo che nessuno vorrebbe sentire.
+Cranio Incrinato|Un suono sordo come di zucca spezzata; il mondo si fa bianco e un ronzio feroce ti riempie la testa.
+Mente in Frantumi|Il colpo rimbomba nel cranio e i pensieri si sparpagliano come uccelli: serve uno sforzo enorme per rimetterli in fila.
+Polmone Schiacciato|Il fiato ti esce di colpo e non vuole più tornare; boccheggi come un pesce sulla riva.
+Gomitata Feroce|Un gomito micidiale ti colpisce al fianco; le dita si aprono da sole e ciò che stringevi cade a terra.
+Ceffone Magistrale|Uno schiaffo così sonoro che gli uccelli smettono di cantare; resti immobile, con la guancia in fiamme e la mente vuota.
+Buonanotte|Un solo colpo preciso e dolce come una ninnananna: le luci si spengono e il mondo scivola via.
+Addio Denti!|Senti sapore di sangue e qualcosa di duro in bocca: i denti sono finiti per terra e le parole escono storpiate.
+Sbalzato Indietro|La forza dell'urto ti solleva da terra e ti scaraventa all'indietro come un sacco di patate.
+Testa che Ronza|Il colpo lascia un fischio nelle orecchie e una nebbia che rende difficile ragionare o capire cosa accade.
+Gambe Cedevoli|Le ginocchia si piegano di colpo come se qualcuno avesse tagliato i fili: crolli a terra senza dignità.
+E Giù a Terra!|Un colpo che non ammette repliche: finisci disteso e una voce sopra di te ti ordina di restare lì.
+Rintocchi nella Testa|Campane enormi suonano dentro il tuo cranio; lo stomaco si ribella e la vista ondeggia.
+Costola Incrinata|A ogni respiro una fitta ti ricorda il colpo: respirare a fondo è diventata una tortura.
+Ginocchio in Pezzi|Il ginocchio fa un rumore sgradevole e non regge più il tuo peso: ogni passo è un incubo.
+Doppio Schiaffo alle Orecchie|Due mani si chiudono sui lati della testa con la violenza di un tuono: il mondo si ovatta in un fischio costante.
+Stelle e Scintille|Lampi colorati ti danzano davanti agli occhi: non riesci a mettere a fuoco e ogni colpo che tenti va a vuoto.
+Mazza in Piena Faccia|Il naso schiocca, gli occhi si riempiono di lacrime: per qualche istante sei cieco e furioso.`,Perforante:`Occhio Perso|La punta entra dove non dovrebbe: un lampo di dolore, poi il buio da un lato e il mondo perde profondità.
+Polmone Bucato|Respiri con un sibilo sinistro e a ogni inspirazione senti l'aria sfuggire da un foro che non dovrebbe esserci.
+Schiena Spezzata|Un dolore gelido lungo la spina e le gambe smettono di obbedirti: cadi come una marionetta senza fili.
+Piccolo Foro, Grande Guaio|Una ferita minuscola, quasi elegante, ma il sangue sgorga senza sosta e macchia tutto di rosso.
+Gomito Trafitto|La lama scivola tra le ossa dell'articolazione; la mano si apre da sola e ciò che reggevi cade tintinnando.
+Lingua Legata|Il dolore alla bocca ti impedisce di articolare: le parole escono impastate e le formule si inceppano.
+Ferita Infetta|Dopo qualche ora la ferita si gonfia e puzza: una febbre sorda mina le tue energie e la tua resistenza.
+Arteria Graffiata|Un fiotto caldo e rosso sprizza al ritmo del cuore: serve subito una mano che prema sulla ferita.
+Punta Incastrata|Un frammento d'arma resta conficcato nella carne e ogni movimento lo spinge più a fondo, moltiplicando il dolore.
+Trapassato da Parte a Parte|La lama esce dall'altro lato con un suono viscido: una ferita pulita, profonda, e un freddo improvviso.
+Nervi Scossi|Una scossa elettrica ti percorre la schiena: i muscoli sussultano e per qualche momento non sei più padrone di te.
+Dritto nel Corpo|Un affondo preciso ti lascia senza fiato e senza forze: per un istante resti immobile in attesa del dolore.
+Inchiodato al Muro|Un dardo ti blocca il braccio contro la parete o l'albero: per liberarti servono forza e un bel po' di coraggio.
+Puntura Velenosa|La punta era unta di qualcosa di cattivo: una nausea acida ti sale in gola e la vista si fa pesante.
+Spalla Trafitta|Il braccio pesa come piombo e ogni movimento strappa una smorfia: impugnare un'arma diventa una fatica.
+Scheggia d'Osso|Qualcosa di duro e affilato si stacca dentro la ferita: il dolore è più profondo e più cattivo.
+Guancia Bucata|La punta trapassa la guancia e per un attimo sembri sorridere: parlare è doloroso e confuso.
+Tallone Colpito|Il tendine cede con uno schiocco: ogni passo è un lamento e la corsa un ricordo lontano.
+Dritto nell'Orecchio|Un fischio acuto copre ogni altro suono e un filo di sangue scende lungo il collo: sei sordo e disorientato.
+Polpaccio Forato|La gamba si piega sotto il dolore: restare in equilibrio diventa difficilissimo e ogni schivata è un azzardo.`,Tagliente:`Decapitazione|Un lampo d'acciaio, un fruscio d'aria: per un istante tutto si ferma, poi il mondo riprende a girare in modo orribile.
+Mano Mozzata|Il taglio è pulito, quasi educato: la mano resta a terra e una fontana rossa sgorga dal polso.
+Sventrato|La lama apre il ventre in un lungo arco: ciò che c'è dentro vorrebbe uscire e tu cerchi disperatamente di trattenerlo.
+Gola Squarciata|Una linea rossa compare sotto il mento: non esce più un suono, solo un gorgoglio e un caldo senso di vertigine.
+Fendente agli Occhi|Un taglio netto davanti al viso e un velo di sangue ti cala sugli occhi: tutto è buio e bruciore.
+Frustata alla Fronte|Un solco rosso attraversa la fronte e il sangue cola negli occhi, rendendo la vista vaga e brumosa.
+Orecchio Mozzato|Un pezzo di te vola via e un suono acuto riempie il vuoto: il mondo ti sembra stranamente lontano.
+Firma sulla Pelle|L'avversario incide le sue iniziali sul tuo corpo con un sorriso: la rabbia ti acceca e vuoi vendetta.
+Labbro Spaccato|Il taglio apre la bocca e il sangue cola sul mento: pronunciare formule magiche diventa un'impresa dolorosa.
+Ventre Aperto|Una ferita larga e profonda sul ventre: ogni passo fa sgorgare altro sangue e la forza se ne va.
+Pelle Strappata|La lama porta via lembi di pelle e muscolo: ogni sforzo fisico fa gridare i nervi allo scoperto.
+Dita Volanti|Qualche dito saluta per sempre il resto della mano: impugnare l'arma diventa goffo e dolorosissimo.
+Torace Squarciato|Il colpo apre il petto con un solco profondo: ogni respiro è un dolore bruciante e ti manca l'aria.
+Squarcio Cattivo|Un taglio lungo e irregolare che non smette di sanguinare: correre farebbe solo peggiorare le cose.
+Cinghie Tranciate|La lama recide le cinghie dell'armatura: i pezzi penzolano e non proteggono più come prima.
+Taglietto Fastidioso|Un graffio da nulla, ma ben piazzato: il dolore ti distrae quel tanto che basta per sbagliare i colpi.
+Vesti in Brandelli|La stoffa si straccia lasciando scoperti punti vulnerabili: ti senti nudo e fragile davanti al nemico.
+Tendine Sfiorato|La lama sfiora il tendine e la gamba tira, rifiutandosi di sostenerti come dovrebbe.
+Sopracciglio Spaccato|Il sangue scivola dal sopracciglio agli occhi: bruciano, lacrimano e mirare diventa un azzardo.
+Fendente al Fianco|Un solco rosso sul fianco che brucia come fuoco: ogni movimento spinge fuori un po' di sangue.`,Magico:`Squarcio tra i Piani|L'aria si apre come stoffa e un vento straniero ti risucchia: per un istante sei altrove, tra cose impossibili.
+Trasformato in Pietra|Il grigio sale dai piedi lungo il corpo: ogni muscolo si irrigidisce e la voce si spegne in un sospiro di sasso.
+Vita Risucchiata|Senti la forza scorrere fuori da te come acqua da una brocca incrinata: resti svuotato e tremante.
+Anima Sfilacciata|Un frammento di spirito si stacca con uno strappo: una parte di te sembra essere rimasta altrove.
+Tessuto Chiuso|Il flusso magico ti sfugge di mano come un pesce: le parole non rispondono e le dita restano mute.
+Potere che Scivola|Senti l'energia fuggire dalla tua mente come sabbia tra le dita: uno slot svanisce senza lasciare traccia.
+Magia Vampirica|Un filo di energia ti unisce al nemico: ciò che perdi, lui lo assorbe, e il suo sorriso si fa più vivo.
+Fiamme Ostinate|Il fuoco si attacca ai vestiti e non si spegne: devi batterlo con le mani prima che divori tutto.
+Gelo nelle Ossa|Una brina bianca ti copre ciglia e capelli: i muscoli si irrigidiscono e ogni movimento è lento e doloroso.
+Scossa ai Nervi|Un fulmine ti attraversa il corpo: per un momento non sei più padrone dei tuoi riflessi.
+Tuono nel Cranio|Un boato enorme esplode attorno a te e ti scaraventa indietro: le orecchie fischiano e il mondo si ovatta.
+Pensieri Annebbiati|Una nebbia densa ti riempie la testa: i concetti sfuggono e la concentrazione si disperde come fumo.
+Veleno Arcano|Un liquido bruciante ti scorre nelle vene: nausea, brividi e uno strano sapore di rame in bocca.
+Visione del Vuoto|Per un istante vedi un altrove senza forma né senso: la mente si ritrae atterrita e il cuore batte forte.
+Acido Corrosivo|Un liquido verdastro corrode il metallo dell'armatura con un sibilo: piastre fumanti e un odore pungente.
+Occhi Abbagliati|Un lampo di luce pura ti brucia il nervo ottico: tutto diventa bianco e le lacrime ti rigano le guance.
+Fischio Insopportabile|Una nota acutissima ti fora i timpani: non senti più nulla se non quel suono martellante.
+Scintille tra i Capelli|Piccole scariche ti crepitano addosso: i capelli si rizzano e ogni tocco ti procura una scossa fastidiosa.
+Riflessi Rallentati|Per un battito il tempo ti sembra denso come miele: il tuo corpo risponde un istante troppo tardi.
+Eco Arcana|Una vibrazione profonda ti scuote le ossa: l'incantesimo risuona in te e ti fa ancora più male.`};
+const TFf={Mischia:`Disastro Totale|Tutto va storto in un colpo solo: i piedi si incrociano, l'arma gira e ti ritrovi a terra con la testa che gira.
+Impugnatura Spezzata|Il manico si incrina con uno scricchiolio sinistro: l'arma diventa goffa, corta e pericolosamente instabile.
+Colpo di Rimbalzo|La lama rimbalza su qualcosa di duro e ti sfiora: per fortuna è solo un graffio, ma il tuo orgoglio sanguina.
+Lama Spezzata|Un tintinnio metallico che ti gela il sangue: l'acciaio si spezza e la punta vola lontano.
+Scudo in Frantumi|Il legno si spacca in mille schegge e il bordo di ferro ti sfugge dal braccio, inutile e distrutto.
+Attenzione agli Amici!|Nella foga del colpo non guardi dove vai: l'alleato più vicino si trova proprio sulla traiettoria.
+Orecchio Sfiorato|La lama ti passa a un soffio dal volto e ti sfiora l'orecchio: un fischio acuto ti riempie la testa.
+Faccia nella Polvere|Inciampi e finisci a terra: la polvere ti entra negli occhi e per un attimo non vedi nulla.
+Scivolone|Il piede trova qualcosa di viscido e sfugge: voli in avanti con tutta la dignità di un sacco di grano.
+Arma Volante|L'arma scivola dalle dita e vola via in una traiettoria imprevedibile, facendo scappare tutti.
+Troppa Roba Addosso!|Zaino, cinghie e oggetti appesi si aggrovigliano in un nodo e ti intralciano ogni movimento.
+Prendi Pure!|L'arma ti sfugge di mano proprio verso l'avversario, che la afferra con un sorriso soddisfatto.
+Impugnatura Storta|L'arma si piega o si storce: ora è più scomoda da tenere e quasi impossibile da usare con precisione.
+Strappo alla Schiena|Un dolore improvviso alla schiena ti blocca a metà movimento: forza e agilità ne risentono.
+Mani Scivolose|L'arma ti sfugge dalle dita come un pesce e cade con un tonfo sordo proprio ai tuoi piedi.
+Colpo Sgraziato|Perdi l'equilibrio e resti scoperto per qualche istante: chiunque potrebbe approfittarne.
+Lama Scheggiata|Il colpo lascia sull'acciaio una piccola tacca: l'arma perde il suo filo e taglia meno bene.
+Nocche Sbucciate|Colpisci qualcosa di duro e le nocche si aprono: il sangue goccia lento ma costante.
+Scossa al Gomito|Il gomito urta contro qualcosa e un formicolio ti ottunde il braccio: l'altra mano molla la presa.
+Aspetta, Cosa?|Perdi il filo di ciò che stava succedendo e resti a fissare il vuoto mentre il combattimento va avanti.`,Distanza:`Tiro Boomerang|La freccia colpisce qualcosa di duro e rimbalza verso di te: il lampo ti acceca e il dolore ti coglie di sorpresa.
+Stremato|Hai tirato troppo a lungo e con troppa forza: i muscoli bruciano, il fiato è corto e le braccia tremano.
+Arma Distrutta|Il legno dell'arco si spezza con uno schiocco secco: l'arma è ormai ridotta a un mucchio di schegge.
+Il Colpo di Ritorno|Il proiettile cambia direzione all'ultimo istante e torna indietro verso di te con un sibilo beffardo.
+Piede Sbagliato|Il tallone trova una pietra instabile e perdi l'equilibrio: finisci a terra con l'arma ancora in mano.
+Corda Spezzata|La corda si strappa con uno schiocco violento e sferza l'aria: l'arma è inservibile finché non la sistemi.
+Fuoco Amico|Il tuo alleato era proprio nel punto sbagliato al momento sbagliato: il dardo lo coglie senza pietà.
+Non il Mio Pony!|Un nitrito disperato risuona dietro di te: la cavalcatura alleata ha deciso di fare da bersaglio.
+Meccanismo Inceppato|Qualcosa nel meccanismo si blocca con un clic metallico: serve un po' di tempo per sistemarlo.
+Colpo Troppo Vicino|Il proiettile rimbalza e un lampo ti passa davanti agli occhi: resti accecato per un istante.
+Faretra Rovesciata|Le frecce cadono tutte insieme con un fruscio di legno: recuperarle richiede tempo e un po' di pazienza.
+Impigliato nella Corda|La corda si avvolge intorno al braccio e ti blocca i movimenti: per liberarti serve un po' di calma.
+Mira Sbagliata|Il bersaglio non è più dove pensavi: la freccia vola via verso qualcosa che non volevi colpire.
+Postura Impacciata|Hai le gambe incrociate e la schiena storta: per qualche istante sei un bersaglio facile.
+Mal di Testa da Mira|Hai trattenuto il respiro troppo a lungo: la vista si offusca e lo stomaco si ribella.
+Guardia Abbassata|Il tiro ti ha fatto dimenticare di difenderti: per un attimo sei esposto a chiunque voglia approfittarne.
+Polso Storto|Una fitta nel polso ti ricorda che quella posizione non era naturale: le mani ora non rispondono bene.
+Dita Segnate|La corda ti frusta le dita e lascia un solco rosso: ogni movimento riapre il taglio.
+Fischio nelle Orecchie|Il suono secco dello schiocco ti perfora le orecchie: un fischio persistente copre ogni altro rumore.
+Un Colpo alla Volta|Respiri a fondo e ti senti sopraffatto: meglio concentrarsi e fare un solo tiro, ma fatto bene.`,Naturale:`Schianto Brutale|Ti lanci con tutta la furia e finisci contro qualcosa di duro: il mondo gira e senti solo un forte ronzio.
+Pugno Autolesionista|Il colpo parte con foga ma finisce nel posto sbagliato: ti dai un cazzotto da solo e ti senti ridicolo.
+Dito Incastrato|Il tuo artiglio resta impigliato nell'armatura del nemico: tiri, strattoni, ma resti bloccato dolorosamente.
+Spalla Slogata|Un crac secco alla spalla: l'arma naturale pende inerte e ogni tentativo di usarla fa gridare i nervi.
+Fuori Posizione|Ti sei sbilanciato troppo: la tua arma naturale è nella direzione sbagliata e non puoi usarla subito.
+Gamba Sbilanciata|Il piede si impiglia in qualcosa e inciampi con un grido sorpreso: il suolo ti accoglie senza gentilezza.
+Nocche Sanguinanti|Colpisci qualcosa di duro e la pelle si apre: il sangue gocciola lento e il dolore pulsa a ogni battito.
+Muscolo Strappato|Un crac sottile e un dolore improvviso ti attraversano il braccio: i muscoli non rispondono come prima.
+Testa nel Muro|Ti schianti contro la parete con la testa: il mondo vortica e per qualche istante non sai più dove sei.
+Testata Sbagliata|La testata va a vuoto e ti lascia sbilanciato: barcolli come dopo una notte di taverna.
+Preso al Volo|Il nemico anticipa il colpo, ti afferra al volo e usa la tua stessa forza per farti cadere.
+Zanna Scheggiata|Qualcosa si rompe con un suono secco: un pezzo di zanna o artiglio resta a terra e fa male.
+Morso alla Lingua|Chiudi la mascella nel momento sbagliato e ti mordi la lingua: ti si riempie la bocca di sapore metallico.
+Troppo in Avanti|Ti sporgi troppo per colpire e lasci scoperti i fianchi: chiunque ti stia attorno coglie l'occasione.
+Braccio Addormentato|Un formicolio fastidioso ti sale lungo l'arto: le dita non obbediscono e la nausea è dietro l'angolo.
+Furia Cieca|La rabbia ti annebbia la vista: l'artiglio colpisce chi non dovrebbe, proprio il tuo alleato più vicino.
+Starnuto Fatale!|Proprio nel momento cruciale un solletico al naso ti fa sbuffare: chiudi gli occhi e perdi il momento.
+Crampo al Polpaccio|Un dolore improvviso e acuto ti blocca il polpaccio: ogni passo diventa un lamento, ogni salto un'impresa.
+Mano Intorpidita|Non senti più le dita: la presa è debole e il prossimo colpo sarà incerto e malfermo.
+Baricentro Sbagliato|Il peso non è dove dovrebbe: ti muovi goffo e lento, offrendo al nemico una guardia fragile.`,Magia:`Squarcio Mostruoso|La formula si distorce e dal buco nell'aria si affaccia qualcosa di antico e affamato che ti fissa con occhi lucidi.
+Specchio Beffardo|L'incantesimo rimbalza e torna verso di te come un boomerang: ti colpisce con tutta la sua forza.
+Decollo Involontario|Una raffica improvvisa ti solleva da terra e ti scaraventa verso il cielo, prima che la gravità riprenda il comando.
+Slot Bruciato|Il Tessuto si strappa con uno schiocco bruciante: lo slot è perso e un dolore psichico ti attraversa la mente.
+Mente Prosciugata|Una nebbia densa ti riempie il cranio: le idee scivolano, le parole si confondono e il pensiero si fa lento.
+Fuoco Arcano|Il potere si ribella e ti morde: una fiammata brucia l'aria attorno a te e ti lascia fumante.
+Fatica Magica|Il tuo fiato magico si spegne: le parole non vogliono più uscire e le dita restano rigide.
+Formula Perduta|La formula svanisce dalla tua memoria come un sogno al risveglio: per un giorno intero non riesci a ricordarla.
+Lingua Annodata|Le sillabe magiche si intrecciano in bocca come fili aggrovigliati: impossibile pronunciare con chiarezza.
+Concentrazione Spezzata|Il filo del tuo pensiero si rompe con uno strappo: ogni incantesimo in corso si dissolve nel nulla.
+Bersaglio Sbagliato|L'incantesimo devia all'ultimo istante e si schianta su qualcuno che non c'entrava proprio nulla.
+Scintille Instabili|L'incantesimo si disfa in una pioggia di scintille ribelli e una piccola esplosione ti scaraventa indietro.
+Singhiozzo Arcano|Un hic improvviso scuote il tuo corpo e spezza il ritmo dei riflessi: la reazione arriva sempre troppo tardi.
+Capelli Elettrici|Una scarica statica ti attraversa e ti rizza i capelli: ogni movimento è nervoso e poco coordinato.
+Voce Fuori Controllo|Quando apri bocca esce solo rima baciata o versi senza senso: nessuno riesce a prenderti sul serio.
+Aura Residua|Rimani avvolto da una luce abbagliante: sei un bersaglio perfetto, visibile da chilometri di distanza.
+Gusto Metallico|Un sapore di monete ti riempie la bocca e lo stomaco si contorce: la nausea ti pervade lentamente.
+Eco in Ritardo|L'incantesimo arriva con un attimo di ritardo, come un'eco: la mira ne risente e sbagli tutto.
+Brividi Arcani|Un freddo improvviso sale lungo la schiena e ti rallenta i movimenti: ogni passo sembra pesantissimo.
+Nube di Fumo|Una nuvoletta grigia ti avvolge il viso: tossisci, lacrimi e il mondo diventa un acquerello sbiadito.`};
+function ap(D,T){for(const k in T){const A=T[k].split('\n');D[k][2]=D[k][2].split('\n').map((l,i)=>{const p=l.split('|'),t=A[i].split('|');p[0]=t[0];p[1]=t[1];return p.join('|')}).join('\n')}}
+ap(CR,TFc);ap(FU,TFf);
+const XC={Contundente:{G:`Colonna Vertebrale Sfondata|Un colpo dall'alto piomba tra le scapole con un rumore di legna spaccata: le gambe non rispondono e ti accasci come un burattino.|Prono, velocità 0 e Svantaggio ai TS su Destrezza fino a cura magica o Riposo Lungo.|C
+Cuore Fermato|Il pugno colpisce il petto con precisione feroce: il cuore perde un battito, poi un altro, e il mondo si fa scuro.|Incapacitato fino all'inizio del suo prossimo turno e 1 livello di Esaurimento.|C
+Bacino Frantumato|Un colpo basso e devastante: le ossa dell'anca si piegano e ogni movimento è una lama rovente nelle gambe.|Velocità ridotta a 1,5 m e Svantaggio alle prove di Destrezza fino a cura magica o Riposo Lungo.|C
+Mascella Disarticolata|La mascella schiocca fuori sede con un suono nauseante: non riesci più a chiudere la bocca né a pronunciare parola.|Non può parlare né lanciare incantesimi verbali fino a Riposo Breve o Medicina CD 13.|C
+Spalla Schiantata|Il colpo si abbatte sull'articolazione con una violenza da martello: il braccio pende morto lungo il fianco.|Un braccio inutilizzabile fino a cura magica o Riposo Lungo.|C
+Coma Improvviso|Un colpo alla nuca come un sipario che cala: ti accasci senza un lamento e senza sapere dove sei.|Privo di sensi per 1 minuto o finché non subisce danno.|C`,M:`Urto di Scudo|Il colpo ti scuote come una campana: senti i denti vibrare e le ginocchia farsi molli.|Svantaggio ai tiri per colpire e niente Reazioni fino all'inizio del suo prossimo turno.|C
+Piede Pestato|Un tonfo sulle dita del piede strappa un urlo di dolore e ti fa saltellare come un fagiano.|Velocità dimezzata e Svantaggio ai TS su Destrezza fino alla fine del suo prossimo turno.|C
+Fiato Mozzato|Il colpo allo stomaco ti svuota i polmoni: provi a respirare e l'aria sembra rifiutarsi di entrare.|Incapacitato fino alla fine del suo prossimo turno.|C
+Guancia Gonfia|La faccia esplode di dolore e il sapore del ferro ti riempie la bocca: un occhio comincia già a chiudersi.|Svantaggio a Percezione e ai tiri per colpire a distanza per 1 minuto.|C
+Spalla Fuori Posto|Un crac sordo e il braccio non risponde più come dovrebbe: ogni gesto strappa una smorfia.|Svantaggio alle prove di Forza e ai tiri per colpire con quell'arma fino a Riposo Breve.|C
+Colpo ai Reni|Il pugno ai reni ti scuote dentro: un dolore sordo ti piega in due e ti toglie ogni voglia di combattere.|Avvelenato per 1d4 round.|C
+Mano Schiacciata|Le dita finiscono sotto l'impatto con uno scricchiolio sgradevole: l'arma sfugge e la presa è debole.|Lascia cadere ciò che tiene; mano inutilizzabile fino alla fine del suo prossimo turno.|D
+Testa Contro la Parete|L'impatto è tale che il rumore dei tuoi pensieri si fa sordo e distante.|Stordito fino alla fine del suo prossimo turno.|C
+Caviglia Torta|Il piede si piega in un angolo innaturale e il dolore sale lungo la gamba come una scossa.|Velocità dimezzata e Svantaggio ad Acrobazia fino a Riposo Breve.|D
+Spinta Violenta|L'urto ti solleva e ti scaraventa lontano, fino a finire in mezzo ai rottami o alla polvere.|Spinto di 4,5 m e Prono.|F
+Elmo Ammaccato|L'elmo si deforma con un suono metallico e ti si stringe sulla testa: vedi tutto storto e annaspi.|Svantaggio a Percezione e ai tiri per colpire fino a Riposo Breve; −1 alla CA finché non riparato.|C
+Schiena Scossa|Un colpo tra le scapole ti raddrizza di scatto e ti lascia il fiato corto e i muscoli contratti.|Svantaggio ai tiri per colpire basati su Forza fino a Riposo Breve.|C
+Orecchio in Fiamme|Il colpo risuona nel timpano come un gong: il mondo diventa ovattato e il fischio non ti lascia più.|Assordato per 1 minuto e Svantaggio ai TS su Saggezza per 1 round.|C
+Collo Rigido|Una fitta ai muscoli del collo ti blocca la testa di lato: ogni movimento è una pugnalata.|Svantaggio a Percezione e agli attacchi a distanza fino a Riposo Breve.|C
+Ruzzolone|Il colpo ti fa perdere l'equilibrio e rotoli per terra con un tonfo, sollevando una nuvola di polvere.|Prono e −2 alla CA fino all'inizio del suo prossimo turno.|D
+Mascella Indolenzita|Il pugno ti scuote la mascella e ti fa girare la testa: parlare è una pena e gli incantesimi escono storpiati.|30% di fallire incantesimi verbali fino a Riposo Breve.|C`,L:`Pugno nelle Costole|Un tonfo secco sul fianco: il respiro si accorcia e un dolore sordo ti ricorda di stare attento.|Subisce 1d4 danni contundenti extra e Svantaggio al prossimo tiro per colpire.|C
+Naso Sanguinante|Uno schiocco umido e il sangue ti cola sul mento: gli occhi lacrimano e la vista si fa pallida.|Svantaggio a Percezione fino alla fine del suo prossimo turno.|C
+Testa Dura|Il colpo rimbalza sul cranio con un suono quasi comico: ti gira la testa ma resti in piedi.|Niente Reazioni fino all'inizio del suo prossimo turno.|C
+Contusione Dolorosa|Un livido violaceo sboccia in un attimo e ogni movimento della zona lo fa pulsare.|Subisce 1d6 danni contundenti extra.|C
+Dito Pestato|Un dito si piega con un crac poco rassicurante e l'impugnatura si fa incerta.|−1 ai tiri per colpire fino a Riposo Breve.|D
+Tonfo Sordo|Un colpo basso al ventre: il dolore ti toglie il respiro per un momento ma niente di grave.|Velocità dimezzata fino alla fine del suo prossimo turno.|C
+Vertigine|Il colpo ti manda il mondo in giostra: i piedi cercano un terreno che non è dove pensavi.|−2 alla CA e Svantaggio alle prove di Destrezza fino alla fine del suo prossimo turno.|C`},Perforante:{G:`Cuore Trafitto|La punta scivola tra le costole con precisione crudele: il cuore salta, poi arranca, e il mondo si restringe a un tunnel.|Incapacitato fino alla fine del suo prossimo turno e 2 livelli di Esaurimento.|C
+Gola Forata|Un getto caldo e una voce spenta: la punta ha bucato la gola e ogni respiro è un fischio.|Non può parlare; 1d6 sanguinamento a turno finché non medicato (Medicina CD 15).|C
+Occhi Trafitti|Un lampo, un dolore bianco, e il buio ti avvolge: entrambi gli occhi sono perduti.|Accecato fino a cura magica.|C
+Fegato Perforato|Un dolore sordo nel fianco e il sangue ti sgorga caldo tra le dita: il fegato è lacerato.|2d6 sanguinamento a inizio turno finché non medicato (Medicina CD 15) e 1 livello di Esaurimento.|C
+Rotula Trafitta|Il ginocchio esplode in un dolore bianco e la gamba si piega come uno stelo spezzato.|Prono e velocità dimezzata fino a cura magica o Riposo Lungo.|C
+Mano Inchiodata|La punta attraversa il palmo e lo inchioda all'arma, al muro o a una trave: ogni strattone è un'agonia.|Mano inutilizzabile e velocità 0 finché non si libera (azione, Forza CD 15) o cura.|F`,M:`Gola Graffiata|Un solco rosso sul collo: il fiato ti si strozza e senti il sapore del ferro nella bocca.|1d4 sanguinamento a turno e Svantaggio agli incantesimi verbali fino a Riposo Breve.|C
+Costola Trafitta|La punta si insinua tra le costole con un sibilo: ogni respiro è una fitta fredda.|1 livello di Esaurimento e Svantaggio alle prove di Forza fino a Riposo Breve.|C
+Coscia Bucata|Un buco netto nella coscia e il sangue caldo scorre giù fino allo stivale.|Velocità dimezzata e 1d4 sanguinamento a turno fino a Riposo Breve o Medicina CD 12.|C
+Polso Forato|La punta si conficca nel polso con uno schiocco secco: le dita si aprono senza permesso.|Lascia cadere ciò che tiene e Svantaggio ai tiri per colpire con quella mano fino a Riposo Breve.|D
+Fianco Trafitto|Un freddo improvviso nel fianco e il dolore arriva in ritardo, ma con gli interessi.|1d6 sanguinamento a turno per 3 round o finché non medicato.|C
+Occhio Colpito|Una scheggia ti sfiora l'occhio: lacrime, bruciore e una macchia nera che danza.|Accecato per 1d4 round, poi Svantaggio a Percezione (vista) fino a Riposo Breve.|C
+Piede Inchiodato|La punta trapassa il piede e lo fissa al terreno: provare a muoversi è come strappare un chiodo dalla roccia.|Velocità 0 finché non si libera (azione, Forza CD 12).|F
+Orecchio Forato|Un dardo ti trafigge l'orecchio, un suono acuto riempie la testa e il sangue ti cola lungo il collo.|Assordato per 1 minuto e 1d4 sanguinamento a turno per 2 round.|C
+Natica Trafitta|Il colpo è tanto doloroso quanto umiliante: non puoi sederti né correre e il tuo orgoglio sanguina.|Svantaggio alle prove di Destrezza e velocità dimezzata fino a Riposo Breve.|C
+Avambraccio Forato|La punta entra ed esce con un crack di tendini: il braccio si irrigidisce e la presa si perde.|Svantaggio ai tiri per colpire con quel braccio fino a Riposo Breve.|D
+Sotto l'Ascella|Un colpo che trova la fessura tra le placche: il sangue scorre caldo lungo il fianco.|1d6 sanguinamento a turno e −1 alla CA finché non medicato.|C
+Mano Trafitta|Un dolore atroce attraversa la mano e le dita si serrano in un artiglio convulso.|Svantaggio ai tiri per colpire con quella mano fino a Riposo Breve.|D
+Schiena Perforata|La punta ti entra tra le scapole con un rumore secco: i muscoli si irrigidiscono e il respiro si spezza.|Svantaggio alle prove di Forza e Destrezza fino a Riposo Breve.|C
+Spalla Inchiodata|Un dardo ti inchioda l'armatura alla spalla: il braccio non risponde e ogni sforzo strappa la carne.|Non può usare quel braccio finché non rimosso (azione, Medicina CD 12).|F
+Arteria della Coscia|Un getto caldo ti scorre sulla gamba: è sangue che ti sfugge senza preavviso.|2d4 sanguinamento a turno finché non medicato (Medicina CD 12).|C
+Perforazione Sottile|Un buco appena visibile, ma il dolore sale come una scossa fredda e ti toglie ogni forza.|Avvelenato per 1d4 round.|C
+Mento Trafitto|La punta trapassa il mento e inchioda la lingua: pronunciare una parola è un tormento.|Non può lanciare incantesimi verbali per 1 minuto.|C`,L:`Graffio Profondo|Un solco rosso e bruciante, non pericoloso ma fastidioso come una vespa.|1d4 sanguinamento a turno per 2 round.|C
+Orecchio Bucherellato|Un forellino nell'orecchio: sangue e un fischio sottile, ma niente di grave.|Assordato fino alla fine del suo prossimo turno.|C
+Puntura Fastidiosa|Una puntura sul fianco: poco profonda, ma ti sveglia dal torpore di colpo.|Svantaggio al prossimo tiro per colpire.|C
+Dito Forato|Un dito sanguina e non riesci più a stringere l'impugnatura come prima.|−1 ai tiri per colpire fino a Riposo Breve.|D
+Polpastrello Trafitto|Un fiotto di sangue sulla mano e la presa è meno sicura.|Svantaggio alle prove di Destrezza fino alla fine del suo prossimo turno.|D
+Spalla Sfiorata|La punta ti sfiora la spalla e ti lascia un dolore pulsante.|Niente Reazioni fino all'inizio del suo prossimo turno.|C
+Ferita Superficiale|Un taglio a forma di punto: poco sangue ma tanta rabbia.|Subisce 1d6 danni perforanti extra.|C`},Tagliente:{G:`Collo Quasi Reciso|La lama passa così vicina alla vena che senti il vento sul sangue: un gorgoglio, poi il caldo, poi il freddo.|2d6 sanguinamento a turno e 1 livello di Esaurimento finché non medicato (Medicina CD 15).|C
+Braccio Mozzato|Un fendente netto separa il braccio dal corpo con un rumore di legna tagliata.|Perde l'uso di un braccio fino a Rigenerazione e 1 livello di Esaurimento.|C
+Gamba Troncata|La lama taglia l'arto con precisione chirurgica: cadi, senza più sapere se urlare o svenire.|Prono, velocità 0 e 1 livello di Esaurimento fino a Rigenerazione.|C
+Volto Sfregiato|Un colpo diagonale dalla fronte al mento lascia una cicatrice enorme e un occhio che non vede più.|Accecato fino a cura magica e Svantaggio alle prove di Carisma fino a Rigenerazione.|C
+Cuore Sfiorato|La lama taglia il petto con un solco vermiglio: il cuore trema e il fiato si fa corto.|Incapacitato 1 round e 2d6 sanguinamento a turno finché non medicato (Medicina CD 15).|C
+Spaccato in Due|Un fendente verticale ti attraversa il torso e il mondo si fa rosso e silenzioso.|Subisce 4d6 danni taglienti extra e 2 livelli di Esaurimento.|C`,M:`Scalpo Strappato|Una striscia di pelle e capelli vola via con un suono viscido: il sangue ti cola negli occhi.|Svantaggio ai tiri per colpire e a Percezione fino a Riposo Breve; 1d4 sanguinamento a turno finché non medicato.|C
+Tendine d'Achille Tagliato|Il filo della lama recide il tendine con uno schiocco secco: il piede cade inerte.|Velocità dimezzata e Prono fino a Riposo Lungo o cura magica.|D
+Naso Mozzato|Il naso cade a terra: dolore, sangue e un volto che somiglia a una maschera di orrore.|Svantaggio alle prove di Carisma e Percezione (olfatto) fino a Rigenerazione.|C
+Gola Graffiata Male|Un solco rosso sulla gola: il respiro si fa roco e i comandi diventano un sibilo.|Svantaggio agli incantesimi verbali e 1d4 sanguinamento a turno fino a Riposo Breve.|C
+Polso Tagliato|Un colpo secco ai tendini del polso: la mano si apre da sola e l'arma cade.|Lascia cadere ciò che tiene; mano inutilizzabile fino a Riposo Breve.|D
+Schiena Solcata|Una lunga linea rossa sulla schiena: ogni movimento la riapre.|1d6 sanguinamento a turno e Svantaggio alle prove di Destrezza fino a Riposo Breve.|C
+Lingua Spaccata|La lama ti apre la bocca fino alla gola: le parole escono sporche di sangue.|Non può lanciare incantesimi verbali per 1 minuto.|C
+Coscia Squarciata|Un colpo che apre il muscolo della coscia: il sangue scorre caldo e la gamba cede.|Velocità dimezzata e 1d6 sanguinamento a turno finché non medicato.|C
+Pollice Mozzato|Il pollice vola via e con lui tutta la tua presa sull'arma.|Perde 1 dito: Svantaggio all'uso di armi con quella mano fino a cura magica.|C
+Fronte Tagliata|Un solco rosso sulla fronte e il sangue cola dritto nelle orbite.|Accecato per 1 round e Svantaggio ai tiri per colpire per 1d4 round.|C
+Spalla Aperta|Il fendente affonda nella spalla e scalfisce l'osso: ogni movimento fa urlare i nervi.|Svantaggio ai tiri per colpire e alle prove di Forza fino a Riposo Breve.|C
+Guancia Squarciata|Un taglio dall'orecchio alla bocca: sembra un sorriso grottesco e il sangue gocciola caldo.|20% di fallire incantesimi verbali e 1d4 sanguinamento a turno finché non medicato.|C
+Cinturone Tranciato|La lama taglia cinghie e fodero: le armi cadono e l'equipaggiamento si sparpaglia.|Lascia cadere un oggetto a scelta del DM e −1 alla CA fino a riparazione.|D
+Collo Rigato|Una linea sottile attraversa il collo e il sangue forma una collana di rubini.|1d6 sanguinamento a turno per 3 round o finché non medicato.|C
+Colpo Basso|Una lama bassa e crudele: il dolore ti piega in due e ti fa vedere stelle e comete.|Incapacitato fino all'inizio del suo prossimo turno.|C
+Petto Rigato|Tre solchi paralleli si aprono sul petto come un artiglio di drago: bruciano e sanguinano.|1d6 sanguinamento a turno e Svantaggio ai TS su Costituzione fino a Riposo Breve.|C
+Stinco Aperto|Un fendente sullo stinco scopre l'osso: ogni passo è un lamento.|Velocità dimezzata fino a cura (Medicina CD 12 o magia).|C`,L:`Sbucciatura|La lama ti sfiora la pelle e ne porta via una striscia: poco sangue ma tanta rabbia.|Subisce 1d6 danni taglienti extra.|C
+Taglio sul Braccio|Un taglio sottile sull'avambraccio brucia come aceto.|−1 ai tiri per colpire fino alla fine del suo prossimo turno.|D
+Ciocca Mozzata|Una ciocca di capelli cade e senti il freddo della lama sulla pelle.|Svantaggio al prossimo tiro per colpire.|C
+Guanto Tagliato|La lama taglia il guanto e ti scopre le dita: l'impugnatura si fa insicura.|Svantaggio alle prove di Destrezza fino alla fine del suo prossimo turno.|D
+Strappo alla Tunica|Il tessuto si lacera e un soffio d'aria gelida ti ricorda quanto sei vulnerabile.|−1 alla CA fino all'inizio del suo prossimo turno.|D
+Labbro Tagliato Piano|Una sottile linea rossa sul labbro: parlare brucia ma si può fare.|Svantaggio agli incantesimi verbali fino alla fine del suo prossimo turno.|C
+Graffio al Fianco|Un graffio fastidioso che ti fa dubitare di ogni movimento.|1d4 sanguinamento a inizio turno per 1 round.|C`},Magico:{G:`Anima Strappata|Una forza invisibile ti afferra per il petto e ti strappa un pezzo di spirito: il mondo si fa grigio.|PF massimi ridotti della metà del danno subito e 1 livello di Esaurimento fino a Riposo Lungo.|C
+Immerso nel Vuoto|Le tenebre ti avvolgono, senza suono né luce: non c'è alto né basso, solo il vuoto.|Incapacitato e Accecato per 1 round.|S
+Mente Spezzata|Una voce sconosciuta ti urla nel cranio e i tuoi pensieri si frantumano come vetro.|Stordito per 1 round e Svantaggio ai TS su Intelligenza e Saggezza fino a Riposo Lungo.|I
+Invecchiato di Colpo|I capelli ingrigiscono, la pelle si secca: sei vecchio di decenni in un istante.|2 livelli di Esaurimento e Svantaggio alle prove di Forza e Destrezza fino a Riposo Lungo.|C
+Rimosso dal Tempo|Un lampo e il mondo si ferma: tutti si muovono e tu resti congelato in un istante eterno.|Paralizzato fino alla fine del suo prossimo turno.|S
+Maledizione Arcana|Una runa luminosa ti si imprime sulla pelle e senti la sfortuna scorrerti nelle vene.|Svantaggio a tutti i tiri per colpire, prove e TS per 1 minuto.|S`,M:`Fulmine Concatenato|Un arco elettrico ti attraversa e salta a un vicino: i capelli si rizzano e i denti fischiano.|2d6 danni da fulmine extra e niente Reazioni per 1 round.|D
+Gelo Totale|Uno strato di ghiaccio ti avvolge: ogni movimento è un crepitio e ogni respiro una nuvola.|Velocità 0 e Svantaggio alle prove di Destrezza fino alla fine del suo prossimo turno.|C
+Sussurri Pericolosi|Voci nella tua testa ti dicono cose che non vorresti sentire: sei confuso e spaventato.|Spaventato per 1 minuto; ripete il TS a fine turno.|S
+Sonno Profondo|Le palpebre si fanno di piombo e il mondo si ovatta in una ninnananna incantata.|Privo di sensi per 1 minuto o finché non subisce danno.|S
+Cecità Magica|Una cortina oscura ti cala sugli occhi e ogni luce si spegne: il mondo è tenebra.|Accecato per 1 minuto; ripete il TS a fine turno.|C
+Silenzio Opprimente|Il suono si spegne attorno a te: non senti più né i tuoi passi né la tua voce.|Assordato e muto (niente incantesimi verbali) per 1 minuto.|S
+Dolore Psichico|Un artiglio invisibile ti graffia la mente e ti fa urlare senza produrre suono.|3d6 danni psichici extra e Svantaggio alla Concentrazione per 1 minuto.|I
+Vincoli Arcani|Catene luminose ti si avvolgono attorno e stringono come serpenti.|Trattenuto finché non si libera (azione, Forza CD 14).|F
+Fiamma Divorante|Il fuoco ti avvolge e non si spegne facilmente: ogni secondo brucia più dell'ultimo.|2d6 fuoco a inizio turno per 3 round o finché non si spegne (azione).|D
+Acido Divoratore|Il liquido ti scorre sulla pelle e corrode: ogni goccia fa un forellino fumante.|2d6 danni da acido extra e −1 alla CA fino a riparazione.|D
+Peso Insopportabile|L'aria si fa densa e pesante: ogni gesto è come nuotare nel piombo.|Velocità dimezzata e Svantaggio alle prove di Destrezza per 1 minuto.|F
+Mente Disorientata|I pensieri girano a vuoto e non sai più chi è amico e chi nemico.|Disorientato per 1d4 round: a inizio turno tira 1d4, con 1–2 perde l'Azione.|S
+Terrore Cieco|Un'ombra gigantesca si staglia dietro di te e il cuore ti balza in gola.|Spaventato per 1 minuto e deve fuggire dalla fonte.|S
+Veleno Etereo|Un velo di nebbia violacea ti entra nei polmoni e ti brucia dall'interno.|Avvelenato per 1 minuto e 1d6 danni da veleno a inizio turno.|C
+Scossa Spirituale|Un colpo nell'anima ti scuote fino al midollo: per un attimo non sei più nel tuo corpo.|Incapacitato fino alla fine del suo prossimo turno.|S
+Distorsione Spaziale|Lo spazio si piega e ti ritrovi qualche passo più in là, disorientato.|Teletrasportato di 6 m in direzione casuale e Svantaggio al prossimo attacco.|S
+Sfortuna Arcana|Un gatto nero ti attraversa la strada nel cervello: tutto ti andrà storto per un po'.|Per i prossimi 2 TS tira due dadi e tiene il risultato peggiore.|S`,L:`Brivido Gelido|Un soffio freddo ti sfiora la nuca e ti fa rabbrividire.|Velocità dimezzata fino alla fine del suo prossimo turno.|C
+Capogiro Magico|La testa gira come una trottola e per un istante non sai da che parte è il sopra.|Svantaggio al prossimo tiro per colpire.|C
+Scintilla Dispettosa|Una scintilla ti salta sul braccio e ti fa trasalire.|Subisce 1d6 danni da fulmine extra.|D
+Nube di Polvere Magica|Una polvere luccicante ti entra negli occhi e ti fa starnutire.|Svantaggio a Percezione fino alla fine del suo prossimo turno.|C
+Eco Mentale|Una parola ti risuona in testa senza fine: non riesci a pensare ad altro.|Svantaggio ai TS su Saggezza fino all'inizio del suo prossimo turno.|S
+Luce Intermittente|Una luce lampeggiante ti assale: impossibile mantenere la mira.|−2 ai tiri per colpire fino all'inizio del suo prossimo turno.|C
+Odore di Zolfo|Un fetore pungente ti riempie le narici e ti fa lacrimare.|Avvelenato fino alla fine del suo prossimo turno.|C`}};
+function bd(D,X,gn,mn){for(const k in D){const A=D[k][2].split('\n'),x=X[k]||{},f=s=>(s||'').split('\n').filter(Boolean),g=A.slice(0,gn).concat(f(x.G)),m=A.slice(gn,mn).concat(f(x.M)),l=A.slice(mn).concat(f(x.L));D[k][2]=g.concat(m,l).join('\n');D[k][3]=[g.length,g.length+m.length]}}
+const XF={Mischia:{G:`Fendente al Piede|Nell'impeto di un colpo troppo largo la lama ti affonda nel piede: un urlo, un fiotto di sangue e il terreno che si tinge di rosso.|Subisci 1d6 danni taglienti, velocità dimezzata e 1d4 sanguinamento a turno finché non medicato (Medicina CD 10).
+Arma Incastrata|La lama si pianta nel terreno, nel legno o in un osso e non vuole più uscire: più tiri, più si incastra.|L'arma resta incastrata: serve un'Azione e una prova di Forza CD 13 per estrarla; nel frattempo sei disarmato.
+Tendine Strappato|Un movimento troppo ampio e senti un colpo secco nella gamba: il tendine ha ceduto con un crac sinistro.|Cadi Prono e la velocità è dimezzata fino a Riposo Lungo o cura magica.
+Gomito Fuori Sede|Il peso dell'arma ti sbilancia e l'articolazione schiocca: il braccio pende, inerte e dolorante.|Il braccio d'arma è inutilizzabile fino a Riposo Breve; subisci 1d4 danni contundenti.
+Cecità da Fendente|Nella furia del colpo ti si getta in faccia sabbia, sangue o una scheggia: ogni cosa è buio e bruciore.|Accecato per 1d4 round.
+Mazzata Autoinflitta|L'arma gira nell'aria e ti colpisce di piatto sulla fronte: il mondo si capovolge in un'esplosione di stelle.|Subisci metà del danno dell'attacco e sei Stordito fino alla fine del tuo prossimo turno.`,M:`Cintura Tranciata|Il colpo sbilenco recide la cinghia dello zaino: il contenuto si sparge ovunque con un rumore da cucina in fiamme.|Lasci cadere un oggetto a scelta del DM e perdi l'Azione Bonus nel prossimo turno.
+Armatura Slacciata|Un gancio si sgancia e l'armatura ti penzola addosso come un sacco: ogni movimento la fa sbattere.|−1 alla CA finché non usi un'Azione per riallacciarla.
+Dito Schiacciato|Nella foga del colpo ti si schiaccia un dito tra impugnatura e guardia: un'esplosione di dolore e di parolacce.|Svantaggio ai tiri per colpire fino alla fine del tuo prossimo turno e subisci 1d4 danni contundenti.
+Piroetta Sbagliata|Provi un movimento elegante e ti ritrovi a girare su te stesso come una trottola, in preda alle vertigini.|Svantaggio ai TS su Destrezza e −2 alla CA fino all'inizio del tuo prossimo turno.
+Stivale Perso|Il piede esce dallo stivale con un risucchio infame e resti in equilibrio precario su una gamba sola.|Velocità dimezzata finché non usi un'Azione per rimetterlo.
+Bagnato e Sporco|Un'onda di fango o di liquido sconosciuto ti schizza in faccia: le lacrime ti rigano le guance.|Svantaggio ai tiri per colpire e a Percezione fino alla fine del tuo prossimo turno.
+Arma Troppo Pesante|Metti troppa forza nel colpo e l'arma ti trascina in avanti: finisci lungo disteso come un tronco abbattuto.|Cadi Prono e subisci 1d4 danni contundenti.
+Elmo Storto|L'elmo ti ruota sulla testa e l'apertura finisce sulla nuca: vedi solo ferro e buio.|Accecato finché non usi un'Azione per rimetterlo a posto.
+Alleato in Mezzo|Un compagno ti passa davanti nel momento sbagliato e tu devi bloccare il colpo a metà, torcendoti la schiena.|Subisci 1d6 danni contundenti e sei Incapacitato fino all'inizio del tuo prossimo turno.
+Luce nel Ferro|Un riflesso accecante sulla lama ti coglie in pieno viso e per qualche istante non vedi nulla.|Accecato fino alla fine del tuo prossimo turno.
+Mantello Impigliato|Il mantello si impiglia nella lama o nel nemico e ti strattona all'indietro come un cane al guinzaglio.|Sei Trattenuto finché non usi un'Azione (Forza o Acrobazia CD 12) per liberarti.
+Guantone Scivolato|Il guanto sfugge dalla mano insieme all'arma: stringi solo aria e una manica vuota.|Lasci cadere l'arma e hai Svantaggio al prossimo tiro per colpire.`,L:`Nodo alle Stringhe|Un laccio si annoda proprio nel momento cruciale: il piede si blocca e il corpo prosegue per inerzia.|Velocità dimezzata fino all'inizio del tuo prossimo turno.
+Sudore negli Occhi|Una goccia di sudore ti scende nell'occhio e brucia: sbatti le palpebre invano.|Svantaggio al prossimo tiro per colpire.
+Crampo alla Mano|Le dita si irrigidiscono in un crampo e l'impugnatura si fa tremante.|−1 ai tiri per colpire fino a Riposo Breve.
+Fischio nell'Elmo|Il colpo riecheggia nell'elmo come un gong: orecchie stordite e pensieri confusi.|Svantaggio a Percezione (udito) fino alla fine del tuo prossimo turno.
+Polvere nel Naso|Un'ondata di polvere ti scatena un attacco di tosse furiosa.|Niente Reazioni fino all'inizio del tuo prossimo turno.
+Cadenza Persa|Il ritmo del combattimento ti sfugge e i piedi non seguono più la mente.|−1 alla CA fino all'inizio del tuo prossimo turno.
+Presa Sudata|Il manico è scivoloso come un pesce e continua a girarti tra le dita.|Svantaggio ai tiri per colpire con quell'arma fino alla fine del tuo prossimo turno.
+Ginocchio Cigolante|Un crac sinistro dal ginocchio ti fa temere il peggio, ma regge: per ora.|Velocità −3 m fino alla fine del tuo prossimo turno.
+Fiato Corto|Il colpo a vuoto ti ha lasciato senza fiato e il petto sale e scende a fatica.|Svantaggio alle prove di Forza fino alla fine del tuo prossimo turno.
+Occhi Chiusi|Per riflesso chiudi gli occhi proprio quando non dovevi e il nemico approfitta.|Il nemico ha Vantaggio al prossimo attacco contro di te.
+Passo Falso|Un sasso, una radice, una pozzanghera: il piede finisce dove non doveva.|Subisci 1d4 danni contundenti.
+Sguardo Distratto|Qualcosa attira la tua attenzione per un istante di troppo e la guardia si abbassa.|Gli attacchi d'opportunità contro di te hanno Vantaggio fino all'inizio del tuo prossimo turno.`},Distanza:{G:`Dito Amputato dalla Corda|La corda scatta con violenza assassina e ti strappa via un dito con un crac secco: sangue, grida e panico.|Perdi 1 dito: Svantaggio all'uso di armi a distanza con quella mano fino a cura magica; 1d4 sanguinamento a turno finché non medicato.
+Pallottola nel Piede|Il proiettile esce dal lato sbagliato e ti buca il piede: un dolore bianco e un tonfo di caduta.|Subisci il danno dell'attacco (senza bonus), cadi Prono e la velocità è dimezzata fino a cura.
+Esplosione del Meccanismo|L'arma esplode in una nuvola di schegge e fumo: orecchie fischianti, occhi lacrimanti e mani insanguinate.|L'arma è distrutta, subisci 2d6 danni perforanti e sei Assordato fino a Riposo Breve.
+Freccia nel Cielo|Il tiro parte talmente storto che sparisce verso l'alto: lo seguono tutti gli sguardi, poi ricade con sinistra precisione.|La freccia ricade su una creatura casuale entro 9 m, te compreso, per il danno normale.
+Spalla Slogata|Tirare con troppa forza ti spezza qualcosa nella spalla: il braccio cade come un peso morto.|Il braccio d'arma è inutilizzabile fino a Riposo Breve; subisci 1d4 danni contundenti.
+Occhi Bruciati|Una scintilla del meccanismo ti centra in faccia: un lampo dolorosissimo e il buio.|Accecato per 1d4 round.`,M:`Freccia Rimbalzante|Il dardo rimbalza su una roccia con un sibilo e torna verso di te, solo di striscio.|Subisci 1d6 danni perforanti.
+Munizioni Cadute|Il sacchetto si rovescia e le munizioni rotolano ovunque, tintinnando.|Perdi metà delle munizioni e hai Svantaggio al prossimo attacco.
+Corda Allentata|La corda si allenta con un suono mesto: l'arma perde forza e portata.|Portata dimezzata finché non usi un'Azione per tenderla.
+Mirino Storto|Il mirino si piega e ogni tiro successivo va a destra o a manca.|−2 ai tiri per colpire con quest'arma finché non riparata.
+Calcio nel Mento|Il rinculo ti colpisce in pieno mento e senti i denti scricchiolare.|Subisci 1d4 danni contundenti e Svantaggio agli incantesimi verbali fino a Riposo Breve.
+Dardo Incastrato|Il dardo si blocca nella canna con uno scatto secco: l'arma è bloccata.|Serve un'Azione e una prova di Destrezza CD 12 per sbloccarla.
+Piuma nell'Occhio|Una piuma o una scheggia ti entra nell'occhio e lo fa lacrimare incontrollabilmente.|Svantaggio ai tiri a distanza e a Percezione per 1d4 round.
+Fune Troppo Tesa|Tiri troppo forte e la fune ti sferza il viso con uno schiocco ben udibile.|Subisci 1d4 danni e sei Stordito fino alla fine del tuo prossimo turno.
+Proiettile Fuori Rotta|Il tiro deraglia e va a colpire un oggetto prezioso o fragile nelle vicinanze.|Il DM sceglie un oggetto vicino, che si rompe; hai Svantaggio al prossimo attacco.
+Arco Scheggiato|Il legno si scheggia con un secco crac e una scheggia ti punge il palmo.|L'arma subisce −2 ai tiri per colpire fino a riparazione; subisci 1d4 danni perforanti.
+Vento Contrario|Una folata improvvisa trascina il tiro in direzione opposta e ti sbatte i capelli in faccia.|Svantaggio ai tiri per colpire fino all'inizio del tuo prossimo turno.
+Rinculo Brutale|Il rinculo ti scaraventa all'indietro con un grido di sorpresa.|Spinto di 3 m in direzione opposta al bersaglio e Prono.`,L:`Dita Informicolate|La presa troppo stretta ti addormenta le dita.|Svantaggio alle prove di Destrezza fino alla fine del tuo prossimo turno.
+Sbuffo di Polvere|Una nuvola di polvere si alza dall'arma e ti fa starnutire.|Niente Reazioni fino all'inizio del tuo prossimo turno.
+Occhio Socchiuso|Mirare ti ha affaticato la vista e vedi tutto sfocato.|Svantaggio al prossimo tiro per colpire.
+Sudore sul Manico|La presa scivola e il tiro si perde nel nulla.|−1 ai tiri per colpire fino a Riposo Breve.
+Piede Intorpidito|Rimanere fermo troppo a lungo ti ha addormentato la gamba.|Velocità dimezzata fino alla fine del tuo prossimo turno.
+Giacca Impigliata|Il tessuto si impiglia nella corda e il tiro parte a metà.|Subisci 1d4 danni contundenti.
+Elmo sugli Occhi|L'elmo scivola sugli occhi e vedi solo l'interno del ferro.|Accecato fino all'inizio del tuo prossimo turno.
+Tremolio|Le mani tremano all'ultimo secondo e il tiro vola a caso.|−2 al prossimo tiro per colpire.
+Respiro Corto|Hai trattenuto troppo il fiato e ora boccheggi.|Svantaggio alle prove di Forza fino alla fine del tuo prossimo turno.
+Occhio Bruciato dal Sole|Un riflesso accecante ti coglie mentre miri.|Svantaggio a Percezione (vista) fino alla fine del tuo prossimo turno.
+Fischio dell'Arco|La corda vibra con un fischio acuto e ti stordisce l'orecchio.|Assordato fino all'inizio del tuo prossimo turno.
+Mira Esitante|Il dubbio ti assale e la mano esita.|Gli attacchi d'opportunità contro di te hanno Vantaggio fino all'inizio del tuo prossimo turno.`},Naturale:{G:`Artiglio Spezzato|L'artiglio si spezza alla radice con un crac e un'ondata di dolore.|Subisci 1d6 danni; quest'arma naturale è inutilizzabile fino a Riposo Lungo.
+Zanna Rotta nel Nemico|La zanna si conficca nell'osso del nemico e si spezza: sangue, dolore e un sapore metallico.|Subisci 1d6 danni perforanti; il morso non infligge danni fino a Riposo Lungo.
+Capitombolo Rovinoso|Ti lanci a capofitto e atterri sulla testa con un rumore sordo.|Subisci 1d6 danni contundenti, Prono e Stordito fino alla fine del tuo prossimo turno.
+Coda Attorcigliata|La coda si impiglia tra le tue stesse gambe e ti sbatte a terra con un tonfo.|Prono e Trattenuto finché non usi un'Azione (Acrobazia CD 13) per districarti.
+Ala Strappata|Un'ala si impiglia e si strappa con un suono lacerante: il volo diventa impossibile.|Perdi la velocità di volo e subisci 1d6 danni fino a cura magica o Riposo Lungo.
+Mascella Slogata|La mascella schiocca fuori sede e non riesci più a mordere né a parlare.|Non puoi usare morsi né parlare fino a Riposo Breve.`,M:`Artiglio Incastrato|L'artiglio si incastra in una fessura e ti strattona mentre cerchi di liberarti.|Sei Trattenuto finché non usi un'Azione (Forza CD 12) per liberarti.
+Colpo di Coda a Vuoto|La coda sferza l'aria con tale forza da farti girare su te stesso.|Prono e −2 alla CA fino all'inizio del tuo prossimo turno.
+Pelle Strappata|Nello slancio ti strappi un lembo di pelle e il sangue gocciola.|Subisci 1d4 danni e 1d4 sanguinamento a turno per 3 round.
+Branco Sbagliato|Colpisci un alleato vicino senza accorgertene.|Colpisci l'alleato più vicino a portata per il danno normale.
+Artiglio Spuntato|L'artiglio si smussa contro un'armatura robusta.|−2 ai tiri per colpire con quest'arma naturale fino a Riposo Lungo.
+Salto Mal Calcolato|Salti ma sbagli il calcolo e atterri male.|Subisci 1d6 danni contundenti e la velocità è dimezzata fino alla fine del tuo prossimo turno.
+Zanne nel Vuoto|Chiudi la mascella nell'aria con un clac secco: i denti vibrano e la testa ronza.|Svantaggio a Percezione e ai tiri per colpire fino alla fine del tuo prossimo turno.
+Ruggito Sbagliato|Il ruggito ti esce strozzato e tossisci come un vecchio gatto.|Svantaggio ai tiri per colpire per 1 round.
+Corno Incastrato|Il corno si pianta nel terreno o in un albero: ci vuole tempo per estrarlo.|Sei Trattenuto finché non usi un'Azione (Forza CD 12).
+Piede Impigliato|Un artiglio del piede si impiglia nei tuoi stessi lacci o nella veste.|Prono e −2 alla CA fino all'inizio del tuo prossimo turno.
+Pelo in Gola|Una ciocca di pelo ti va di traverso: tossisci, ti strozzi, ti lacrimano gli occhi.|Incapacitato fino all'inizio del tuo prossimo turno.
+Denti Allegri|Il colpo rimbalza e ti fa battere i denti: un dolore sordo ti attraversa la mascella.|Subisci 1d6 danni contundenti e Svantaggio agli incantesimi verbali fino a Riposo Breve.`,L:`Prurito Improvviso|Un prurito feroce nel peggior punto possibile ti fa dimenare e perdere il ritmo.|Svantaggio al prossimo tiro per colpire.
+Starnuto Felino|Uno starnuto potentissimo ti scuote tutto: i baffi vibrano e gli occhi si chiudono.|Niente Reazioni fino all'inizio del tuo prossimo turno.
+Pelo Arruffato|Il pelo si arruffa e ti impiccia i movimenti.|−1 alla CA fino all'inizio del tuo prossimo turno.
+Zampa Addormentata|Un formicolio ti sale lungo la zampa e non riesci più a sentirla.|Velocità dimezzata fino alla fine del tuo prossimo turno.
+Artigli Sporchi|Si incastra del fango tra gli artigli e l'impugnatura è difficile.|−1 ai tiri per colpire con quest'arma naturale fino a Riposo Breve.
+Fischio nell'Orecchio|Un fischio acuto ti attraversa l'orecchio e perdi l'equilibrio per un attimo.|Svantaggio ai TS su Destrezza fino alla fine del tuo prossimo turno.
+Coda Rigida|La coda si irrigidisce in un crampo e non obbedisce.|Svantaggio alle prove di Acrobazia fino alla fine del tuo prossimo turno.
+Sbadiglio Fatale|Proprio nel momento sbagliato, uno sbadiglio ti spalanca la mascella.|Gli attacchi d'opportunità contro di te hanno Vantaggio fino all'inizio del tuo prossimo turno.
+Pulizia Intempestiva|Ti metti a pulirti una zampa nel bel mezzo della battaglia.|Perdi la tua Azione Bonus nel prossimo turno.
+Tosse da Pelo|Una grossa palla di pelo ti blocca la gola per qualche istante.|Svantaggio alle prove di Forza fino alla fine del tuo prossimo turno.
+Lingua Morsicata Leggera|Un morso involontario alla lingua e un lamento sommesso.|Subisci 1d4 danni.
+Orecchie Piatte|Le orecchie si schiacciano all'indietro e perdi la concentrazione per un istante.|Svantaggio a Percezione fino alla fine del tuo prossimo turno.`},Magia:{G:`Mano Incenerita|Il fuoco magico ti lambisce la mano con un lampo: odore di carne bruciata e dolore.|Subisci 3d6 danni da fuoco e Svantaggio ai componenti somatici fino a Riposo Breve.
+Scambio di Menti Parziale|Per un istante la tua mente scambia posto con quella del bersaglio: confusione, vertigini e nausea.|Sei Stordito fino alla fine del tuo prossimo turno.
+Mutazione Incontrollata|Il Tessuto ti deforma in modo grottesco: un braccio si gonfia, il naso si allunga, le dita diventano pinne.|Svantaggio alle prove di Destrezza e Carisma fino a Riposo Lungo o cura magica.
+Eco Distruttiva|L'incantesimo rimbomba nella tua stessa mente con un urlo senza suono.|Subisci 3d6 danni psichici e sei Incapacitato fino all'inizio del tuo prossimo turno.
+Libro Bruciato|Il tuo libro degli incantesimi o il tuo focus si incendia con un lampo di fiamma viola.|Il tuo focus o libro si danneggia: non puoi lanciare incantesimi finché non lo ripari (1 ora) o ne usi uno di riserva.
+Rottura del Tessuto|Una crepa luminosa si apre davanti a te e ne esce un vento freddo che ti sfila il fiato.|Subisci 2d6 danni da forza, sei Prono e perdi lo slot usato.`,M:`Fiammata Mal Diretta|Il fuoco ti lambisce le sopracciglia con uno sbuffo e un odore di bruciato.|Subisci 1d6 danni da fuoco e hai Svantaggio a Percezione fino alla fine del tuo prossimo turno.
+Fulmine di Rimbalzo|Una scarica elettrica ti attraversa e ti fa rizzare ogni pelo.|Subisci 2d4 danni da fulmine e niente Reazioni fino all'inizio del tuo prossimo turno.
+Illusione Beffarda|L'incantesimo produce un'immagine di te stesso che fa smorfie: tutti ridono.|Svantaggio alle prove di Carisma per 1 minuto e −2 alla CA fino all'inizio del tuo prossimo turno.
+Parole Rovesciate|Pronunci la formula al contrario e i suoni diventano gracchi inintelligibili.|Non puoi lanciare incantesimi verbali fino alla fine del tuo prossimo turno.
+Ombra Ribelle|La tua ombra si stacca e fugge via: ti senti stranamente più leggero e più vulnerabile.|Svantaggio ai TS su Saggezza fino a Riposo Breve.
+Scintille Impazzite|Sprizzano scintille in tutte le direzioni e ti bruciacchiano la tunica.|Subisci 1d6 danni da fuoco e −1 alla CA fino a riparazione.
+Nebbia Arcana|Una nebbia densa ti avvolge e non riesci più a vedere oltre il tuo naso.|Svantaggio a Percezione e ai tiri per colpire a distanza per 1 minuto.
+Voce Gracchiante|La voce diventa un gracchio rauco e gli incantesimi escono distorti.|50% di fallire gli incantesimi verbali fino a Riposo Breve.
+Oggetto Animato Ostile|Un oggetto vicino prende vita e decide di darti fastidio con ceffoni e spintoni.|Subisci 1d6 danni contundenti e sei Spinto di 1,5 m.
+Gravità Capricciosa|La gravità decide di tirarti in direzioni a caso e finisci a terra tra mille capitomboli.|Prono e velocità dimezzata fino alla fine del tuo prossimo turno.
+Bocca Piena di Sabbia|Un sapore sgradevole ti riempie la bocca e tossisci senza posa.|Incapacitato fino all'inizio del tuo prossimo turno.
+Fatica Arcana|Un'ondata di stanchezza ti pervade in un istante.|1 livello di Esaurimento fino a Riposo Breve.`,L:`Singhiozzo Magico|Un hic ti scuote e ti fa lanciare il prossimo incantesimo con voce acuta.|Svantaggio ai tiri per colpire con incantesimo fino alla fine del tuo prossimo turno.
+Fumetto Parlante|Una nuvoletta di parole luminose ti esce dalla bocca e svela i tuoi pensieri.|Svantaggio alle prove di Furtività per 1 minuto.
+Piedi che Brillano|Le scarpe emettono una luce intermittente e tutti sanno dove sei.|Gli attacchi contro di te hanno Vantaggio fino all'inizio del tuo prossimo turno.
+Capelli Fluttuanti|I capelli si alzano e fluttuano da soli: ottimi per l'estetica, pessimi per la concentrazione.|Svantaggio ai TS su Concentrazione fino alla fine del tuo prossimo turno.
+Sapore di Rame|Un sapore di rame ti invade la bocca e ti fa lacrimare.|Avvelenato fino alla fine del tuo prossimo turno.
+Dita Appiccicose|Le dita si incollano tra loro e non riesci più a fare i gesti.|Non puoi lanciare incantesimi con componente somatica fino all'inizio del tuo prossimo turno.
+Vista Doppia|Per qualche istante vedi tutto sdoppiato e confuso.|Svantaggio al prossimo tiro per colpire con incantesimo.
+Nube di Glitter|Una nube di scintillii ti avvolge e ti fa starnutire.|Niente Reazioni fino all'inizio del tuo prossimo turno.
+Pelle Colorata|La pelle diventa di un colore vivace e sgargiante.|Svantaggio alle prove di Furtività fino a Riposo Breve.
+Lingua Straniera|Parli improvvisamente in una lingua sconosciuta e nessuno ti capisce.|Non puoi comunicare a parole fino alla fine del tuo prossimo turno.
+Naso Lungo|Il naso ti si allunga di qualche centimetro e il tuo orgoglio ne soffre.|Svantaggio alle prove di Carisma fino a Riposo Breve.
+Peso Insolito|Gli oggetti che porti addosso diventano improvvisamente pesantissimi.|Velocità dimezzata fino alla fine del tuo prossimo turno.`}};
+bd(CR,XC,4,15);bd(FU,XF,4,12);
+// Estrazione casuale: crypto + rejection sampling (nessun bias), mescolata con Math.random e senza ripetere subito lo stesso esito
+function rnd(n){try{const lim=Math.floor(4294967296/n)*n,a=new Uint32Array(1);do{crypto.getRandomValues(a)}while(a[0]>=lim);return(a[0]+Math.floor(Math.random()*n))%n}catch(e){return Math.floor(Math.random()*n)}}
+function pick(n,last){let r=rnd(n);if(r===last)r=rnd(n);return r}
+let snd=true,PB=2,AC=null;const last={c:{},f:{}},hist={c:[],f:[]};
+$('#snd').onclick=e=>{snd=!snd;e.target.textContent=snd?'🔊':'🔇'};
+function ctx(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}}if(AC&&AC.state==='suspended')AC.resume();return AC}
+function tone(f,t,d,ty,v,to){const a=ctx();if(!a)return;const o=a.createOscillator(),g=a.createGain(),n=a.currentTime+t;o.type=ty;o.frequency.setValueAtTime(f,n);if(to)o.frequency.exponentialRampToValueAtTime(to,n+d);g.gain.setValueAtTime(0.0001,n);g.gain.exponentialRampToValueAtTime(v,n+.02);g.gain.exponentialRampToValueAtTime(0.0001,n+d);o.connect(g).connect(a.destination);o.start(n);o.stop(n+d+.05)}
+function noise(t,d,v,fq){const a=ctx();if(!a)return;const b=a.createBuffer(1,a.sampleRate*d,a.sampleRate),x=b.getChannelData(0);for(let i=0;i<x.length;i++)x[i]=(Math.random()*2-1)*(1-i/x.length);const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();s.buffer=b;f.type='lowpass';f.frequency.value=fq;g.gain.value=v;s.connect(f).connect(g).connect(a.destination);s.start(a.currentTime+t)}
+function sCrit(k){if(!snd)return;const m=k==='Magico';noise(0,.25,.5,m?3000:1800);tone(110,0,.25,'sine',.6,45);const r=[523,659,784,1047,1319];r.forEach((f,i)=>tone(f,.12+i*.08,.5,m?'sine':'triangle',.22));tone(m?1568:1047,.55,.9,'sine',.18);navigator.vibrate&&navigator.vibrate([60,40,120])}
+function sFumble(k){if(!snd)return;[330,311,294,277].forEach((f,i)=>{tone(f,i*.32,.34,'sawtooth',.16,f*.9);tone(f*1.01,i*.32,.34,'square',.05)});tone(70,1.35,.5,'sine',.5,35);if(k==='Magia')tone(900,.1,.5,'sine',.08,200);navigator.vibrate&&navigator.vibrate([200,60,90,60,300])}
+function tick(){snd&&tone(700+rnd(500),0,.04,'square',.04)}
+function mk(kind){const D=kind==='c'?CR:FU,box=$(kind==='c'?'#cb':'#fb');Object.keys(D).forEach(k=>{const b=document.createElement('button');b.className='b';b.style.background=`linear-gradient(145deg,${D[k][1]},#1a1020 160%)`;b.innerHTML=`<span>${D[k][0]}</span>${k}`;b.onclick=()=>roll(kind,k,b);box.appendChild(b)})}
+function roll(kind,k,btn){ctx();const D=(kind==='c'?CR:FU)[k],L=D[2].split('\n'),i=pick(L.length,last[kind][k]);last[kind][k]=i;const card=$(kind==='c'?'#rc':'#rf');card.innerHTML='<div class="rolling"><div class="d20">?</div></div>';let n=0;const iv=setInterval(()=>{card.querySelector('.d20').textContent=1+rnd(L.length);tick();if(++n>9){clearInterval(iv);show(kind,k,D,L[i],i,card)}},60)}
+function show(kind,k,D,line,i,card){const p=line.split('|'),sev=i<D[3][0]?'Grave':i<D[3][1]?'Media':'Lieve';let ex='';
+if(kind==='c'){const base=sev==='Grave'?8:sev==='Media'?12:15;ex=`<div class="sv">🛡️ Tiro salvezza di <b>${AB[p[3]]}</b> · CD ${base} + ${PB} = <b>${base+PB}</b><br><small>Se riesce: solo danno raddoppiato.</small></div>`}
+else{const cd=sev==='Grave'?10:sev==='Media'?13:16,ab=k==='Magia'?'caratteristica da incantatore':k==='Distanza'?'Destrezza':'Forza o Destrezza';ex=`<div class="sv">🛡️ Tiro salvezza: d20 + mod. <b>${ab}</b> + competenza vs <b>CD ${cd}</b><br><small>Successo: manca e basta. Fallimento: subisci l'effetto.</small></div>`}
+card.innerHTML=`<div class="pop"><div class="d20">${i+1}</div><div><span class="tag">${D[0]} ${k}</span><span class="tag ${sev}">${sev}</span></div><div class="tt">${p[0]}</div><p class="fl">${p[1]}</p><div class="ef">${p[2]}</div>${ex}</div>`;
+document.body.classList.remove('fc','ff');void document.body.offsetWidth;document.body.classList.add(kind==='c'?'fc':'ff');
+kind==='c'?sCrit(k):sFumble(k);
+const h=hist[kind];h.unshift(`${D[0]} ${k} · d20=${i+1} · ${p[0]}`);h.length=Math.min(h.length,5);$(kind==='c'?'#hc':'#hf').innerHTML='<b>Ultimi tiri</b>'+h.map(x=>`<div>${x}</div>`).join('')}
+let LK='c',LT='',LG='',LQ='';
+function chips(el,it,cur,fn){el.innerHTML='';it.forEach(([v,t])=>{const b=document.createElement('button');b.textContent=t;if(v===cur)b.className='on';b.onclick=()=>fn(v);el.appendChild(b)})}
+function lib(){const D=LK==='c'?CR:FU;if(!D[LT])LT=Object.keys(D)[0];
+chips($('#lk'),[['c','💥 Critici'],['f','🎲 Fumble']],LK,v=>{LK=v;lib()});
+chips($('#lt'),Object.keys(D).map(k=>[k,D[k][0]+' '+k]),LT,v=>{LT=v;lib()});
+chips($('#lg'),[['','Tutte'],['Grave','Grave'],['Media','Media'],['Lieve','Lieve']],LG,v=>{LG=v;lib()});
+const d=D[LT],B=d[3],q=LQ.toLowerCase();let h='',n=0;
+d[2].split('\n').forEach((l,i)=>{const p=l.split('|'),sev=i<B[0]?'Grave':i<B[1]?'Media':'Lieve';if(LG&&sev!==LG)return;if(q&&!l.toLowerCase().includes(q))return;n++;
+const cd=LK==='c'?(sev==='Grave'?8:sev==='Media'?12:15):(sev==='Grave'?10:sev==='Media'?13:16);
+const sv=LK==='c'?`Tiro salvezza di ${AB[p[3]]} · CD ${cd} + competenza`:`Tiro salvezza di chi attacca · CD ${cd}`;
+h+=`<div class="card li"><span class="tag ${sev}">${sev}</span><div class="tt" style="font-size:1.1rem">${p[0]}</div><p class="fl">${p[1]}</p><div class="ef">${p[2]}</div><div class="sv">🛡️ ${sv}</div></div>`});
+$('#ll').innerHTML=`<p class="hist">${n} effetti</p>`+h}
+$('#olib').onclick=()=>{lib();$$('section').forEach(s=>s.classList.toggle('on',s.id==='l'));scrollTo(0,0)};
+$('#bl').onclick=()=>{$$('section').forEach(s=>s.classList.toggle('on',s.id==='r'));scrollTo(0,0)};
+$('#lq').oninput=e=>{LQ=e.target.value;lib()};
+mk('c');mk('f');
+const pbs=$('#pbs');[2,3,4,5,6].forEach(v=>{const b=document.createElement('button');b.textContent='+'+v;if(v===PB)b.className='on';b.onclick=()=>{PB=v;$$('#pbs button').forEach(x=>x.classList.toggle('on',x===b))};pbs.appendChild(b)});
+$$('nav button').forEach(b=>b.onclick=()=>{$$('nav button').forEach(x=>x.classList.remove('on'));b.classList.add('on');if(b.dataset.t==='f')b.classList.add('f');$$('section').forEach(s=>s.classList.toggle('on',s.id===b.dataset.t));scrollTo(0,0)});
+</script></body></html>
